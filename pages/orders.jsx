@@ -5,51 +5,47 @@ import { data } from '../data/data.js';
 
 const orders = () => {
   return (
-    <div className='bg-gray-100 min-h-screen'>
-      <div className='flex justify-between px-4 pt-4'>
-        <h2>Orders</h2>
-        <h2>Welcome Back, Clint</h2>
-      </div>
+    <div className='bg-gray-100 min-h-screen dark:bg-dark dark:text-white'>
       <div className='p-4'>
-        <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-          <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
+        <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto dark:bg-dark dark:text-white'>
+          <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer dark:bg-dark dark:text-white'>
             <span>Order</span>
-            <span className='sm:text-left text-right'>Status</span>
-            <span className='hidden md:grid'>Last Order</span>
-            <span className='hidden sm:grid'>Method</span>
+            <span className='sm:text-left text-right dark:bg-dark dark:text-white'>Status</span>
+            <span className='hidden md:grid dark:bg-dark dark:text-white'>Last Order</span>
+            <span className='hidden sm:grid dark:bg-dark dark:text-white'>Method</span>
           </div>
           <ul>
             {data.map((order, id) => (
               <li
                 key={id}
-                className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'
+                className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer dark:bg-light-gray dark:text-white'
               >
-                <div className='flex'>
-                  <div className='bg-purple-100 p-3 rounded-lg'>
-                    <FaShoppingBag className='text-purple-800' />
+                <div className='flex dark:bg-light-gray dark:text-white'>
+                  <div className='bg-purple-100 p-3 rounded-lg dark:bg-light-gray dark:text-white'>
+                    <FaShoppingBag className='text-purple-800 dark:bg-light-gray dark:text-white' />
                   </div>
                   <div className='pl-4'>
-                    <p className='text-gray-800 font-bold'>
+                    <p className='text-gray-800 font-bold dark:bg-light-gray dark:text-white'>
                       ${order.total.toLocaleString()}
                     </p>
-                    <p className='text-gray-800 text-sm'>{order.name.first}</p>
+                    <p className='text-gray-800 text-sm dark:bg-light-gray dark:text-white'>{order.name.first}</p>
                   </div>
                 </div>
-                <p className='text-gray-600 sm:text-left text-right'>
+                <p className='text-gray-600 sm:text-left text-right dark:bg-light-gray dark:text-white'>
                   <span
                     className={
                       order.status == 'Processing'
-                        ? 'bg-green-200 p-2 rounded-lg'
+                        ? 'bg-green-200 p-2 rounded-lg dark:bg-Processing dark:text-white'
                         : order.status == 'Completed'
-                        ? 'bg-blue-200 p-2 rounded-lg'
-                        : 'bg-yellow-200 p-2 rounded-lg'
+                          ? 'bg-blue-200 p-2 rounded-lg dark:bg-Completed dark:text-white'
+                          : 'bg-yellow-200 p-2 rounded-lg dark:bg-Hold dark:text-white'
                     }
                   >
                     {order.status}
                   </span>
                 </p>
-                <p className='hidden md:flex'>{order.date}</p>
-                <div className='sm:flex hidden justify-between items-center'>
+                <p className='hidden md:flex dark:bg-light-gray dark:text-white'>{order.date}</p>
+                <div className='sm:flex hidden justify-between items-center dark:bg-light-gray dark:text-white'>
                   <p>{order.method}</p>
                   <BsThreeDotsVertical />
                 </div>

@@ -15,10 +15,9 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className='bg-gray-100 min-h-screen'>
-        <Header />
+      <main className='bg-gray-100 min-h-screen dark:bg-dark dark:text-white'>
         <TopCards />
-        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4'>
+        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
           <BarChart />
           <RecentOrders />
         </div>
