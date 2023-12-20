@@ -21,17 +21,22 @@ const Sidebar = ({ children }) => {
               <RxDashboard size={20} />
             </div>
           </Link>
-          <Link href='/customers'>
+          <Link href='/RegistrationForm'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
               <RxPerson size={20} />
             </div>
           </Link>
-          <Link href='/orders'>
+          <Link href='/LoginForm'>
+            <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
+              <RxPerson size={20} />
+            </div>
+          </Link>
+          <Link href='/OnboardForm'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
               <HiOutlineShoppingBag size={20} />
             </div>
           </Link>
-          <Link href='/'>
+          <Link href='/BillingForm'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
               <FiSettings size={20} />
             </div>
