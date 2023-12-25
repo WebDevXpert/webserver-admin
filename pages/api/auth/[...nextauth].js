@@ -47,4 +47,20 @@ export default NextAuth({
     session: {
         strategy: 'jwt',
     },
-});
+    pages: {
+        session: '/auth/session',
+    },
+    callbacks: {
+        async session({ session, token, user }) {
+            // Calculate the time remaining until the session expires
+            const expiresIn = new Date(session.expires).getTime() - new Date().getTime();
+
+            // If the session is about to expire, refresh the token
+            if (expiresIn < 60 * 1000) {
+                return Promise.resolve({ ...session, expires: token.expires });
+            }
+
+            return Promise.resolve(session);
+        },
+    },
+})
