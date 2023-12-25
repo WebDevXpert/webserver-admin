@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { RxSketchLogo, RxDashboard, RxPerson } from 'react-icons/rx';
+import { RxSketchLogo, RxDashboard } from 'react-icons/rx';
 import { RiLoginBoxFill } from "react-icons/ri";
 import { FaWpforms } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
@@ -40,10 +39,10 @@ const Sidebar = ({ children }) => {
               <h1 className='text-xs'>Bill Input</h1>
             </div>
           </Link>
-          <Link href='/LoginForm'>
+          <Link href='/'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
               <RiLoginBoxFill size={35} className='w-full' />
-              <h1 className='text-xs'>Login</h1>
+              <h1 className='text-xs'>Logout</h1>
             </div>
           </Link>
         </div>
