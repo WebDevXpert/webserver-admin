@@ -1,12 +1,16 @@
 import Head from 'next/head';
-import Image from 'next/image';
-
-import Header from '../components/Header';
+import { useSession } from 'next-auth/react';
 import TopCards from '../components/TopCards';
 import BarChart from '../components/BarChart';
 import RecentOrders from '../components/RecentOrders';
 
 export default function Home() {
+  const { data: session } = useSession();
+
+  if (!session) {
+    return <p>Please log in</p>;
+  }
+
   return (
     <>
       <Head>

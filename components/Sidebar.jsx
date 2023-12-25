@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
-import { RxSketchLogo, RxDashboard, RxPerson } from 'react-icons/rx';
+import { RxSketchLogo, RxDashboard } from 'react-icons/rx';
 import { RiLoginBoxFill } from "react-icons/ri";
 import { FaWpforms } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";

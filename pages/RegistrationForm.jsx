@@ -37,7 +37,7 @@ const RegistrationForm = () => {
                             Confirm Password
                         </label>
                         <input
-                            type="password"
+                            type="current-password"
                             id="confirmPassword"
                             name="confirmPassword"
                             className="w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
