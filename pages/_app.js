@@ -1,13 +1,18 @@
 import '@/styles/globals.css';
 import Sidebar from '../components/Sidebar';
 import GeneralLayout from './general-layout';
+import { SessionProvider } from 'next-auth/react';
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
-    <GeneralLayout>
-      <Sidebar>
-        <Component {...pageProps} />
-      </Sidebar>
-    </GeneralLayout>
+    <SessionProvider>
+      <GeneralLayout>
+        <Sidebar>
+          <Component {...pageProps} />
+        </Sidebar>
+      </GeneralLayout>
+    </SessionProvider>
   );
 }
+
+export default App;

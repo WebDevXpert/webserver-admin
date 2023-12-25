@@ -1,13 +1,10 @@
-import { connect, connection } from 'mongoose';
+import mongoose from 'mongoose';
 
 const connectMongo = async () => {
     try {
-        await connect(process.env.MONGO_URL, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.MONGO_URL);
 
-        if (connection.readyState === 1) {
+        if (mongoose.connection.readyState === 1) {
             console.log('Connected to MongoDB');
             return true;
         } else {
@@ -19,4 +16,4 @@ const connectMongo = async () => {
     }
 };
 
-export { connectMongo };
+export default connectMongo;
