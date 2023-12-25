@@ -12,10 +12,9 @@ import { useRouter } from 'next/router';
 
 
 export default function Login() {
+    const [show, setShow] = useState(false);
+    const router = useRouter();
 
-    const [show, setShow] = useState(false)
-    const router = useRouter()
-    // formik hook
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -23,19 +22,19 @@ export default function Login() {
         },
         validate: login_validate,
         onSubmit
-    })
-
+    });
 
     async function onSubmit(values) {
-        const status = await signIn('credentials', {
+        const { error } = await signIn('credentials', {
             redirect: false,
             email: values.email,
             password: values.password,
-            callbackUrl: "/"
-        })
+            callbackUrl: '/'
+        });
 
-        if (status.ok) router.push(status.url)
-
+        if (!error) {
+            router.push('/');
+        }
     }
 
     // Google Handler function
@@ -60,7 +59,6 @@ export default function Login() {
                     <p className='w-3/4 mx-auto text-gray-400'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
                 </div>
 
-                {/* form */}
                 <form className='flex flex-col gap-5' onSubmit={formik.handleSubmit}>
                     <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
                         <input
@@ -75,7 +73,6 @@ export default function Login() {
                         </span>
 
                     </div>
-                    {/* {formik.errors.email && formik.touched.email ? <span className='text-rose-500'>{formik.errors.email}</span> : <></>} */}
 
                     <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
                         <input
@@ -91,8 +88,6 @@ export default function Login() {
 
                     </div>
 
-                    {/* {formik.errors.password && formik.touched.password ? <span className='text-rose-500'>{formik.errors.password}</span> : <></>} */}
-                    {/* login buttons */}
                     <div className="input-button">
                         <button type='submit' className={styles.button}>
                             Login
@@ -100,17 +95,16 @@ export default function Login() {
                     </div>
                     <div className="input-button">
                         <button type='button' onClick={handleGoogleSignin} className={styles.button_custom}>
-                            Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} ></Image>
+                            Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} alt='Google' ></Image>
                         </button>
                     </div>
                     <div className="input-button">
                         <button type='button' onClick={handleGithubSignin} className={styles.button_custom}>
-                            Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25}></Image>
+                            Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25} alt='Github' ></Image>
                         </button>
                     </div>
                 </form>
 
-                {/* bottom */}
                 <p className='text-center text-gray-400 '>
                     don't have an account yet? <Link href={'/register'} className='text-blue-700'>Sign Up</Link>
                 </p>
