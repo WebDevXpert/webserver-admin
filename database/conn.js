@@ -1,8 +1,8 @@
-import { connect } from 'mongoose';
+import { connect, connection } from 'mongoose';
 
 const connectMongo = async () => {
     try {
-        const { connection } = await connect(process.env.MONGO_URL, {
+        await connect(process.env.MONGO_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -19,4 +19,4 @@ const connectMongo = async () => {
     }
 };
 
-export default connectMongo;
+export { connectMongo };
