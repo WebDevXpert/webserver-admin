@@ -14,6 +14,24 @@ const OnboardForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        try {
+            const response = await fetch('/api/submitForm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log('Form submitted successfully');
+            } else {
+                console.error('Failed to submit form');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
         setFormData({
             buNumber: '',
             billType: 'Electric',
