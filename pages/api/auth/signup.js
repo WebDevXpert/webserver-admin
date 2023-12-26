@@ -1,29 +1,37 @@
-
 import connectMongo from '../../../database/conn';
-import Users from '../../../model/Schema'
+import Users from '../../../model/Schema';
 import { hash } from 'bcryptjs';
 
 export default async function handler(req, res) {
-    connectMongo().catch(error => res.json({ error: "Connection Failed...!" }))
+    try {
+        await connectMongo();
 
-    // only post method is accepted
-    if (req.method === 'POST') {
+        if (req.method === 'POST') {
+            if (!req.body) {
+                console.error("Request body is empty");
+                return res.status(404).json({ error: "Don't have form data...!" });
+            }
 
-        if (!req.body) return res.status(404).json({ error: "Don't have form data...!" });
-        const { username, email, password } = req.body;
+            const { username, email, password } = req.body;
 
-        // check duplicate users
-        const checkexisting = await Users.findOne({ email });
-        if (checkexisting) return res.status(422).json({ message: "User Already Exists...!" });
+            const checkExisting = await Users.findOne({ email });
+            if (checkExisting) {
+                console.error("User already exists");
+                return res.status(422).json({ message: "User Already Exists...!" });
+            }
 
-        // hash password
-        Users.create({ username, email, password: await hash(password, 12) }, function (err, data) {
-            if (err) return res.status(404).json({ err });
-            res.status(201).json({ status: true, user: data })
-        })
+            const hashedPassword = await hash(password, 12);
 
-    } else {
-        res.status(500).json({ message: "HTTP method not valid only POST Accepted" })
+            const data = await Users.create({ username, email, password: hashedPassword });
+
+            console.log("User created successfully:", data);
+            res.status(201).json({ status: true, user: data });
+        } else {
+            console.error("Invalid HTTP method:", req.method);
+            res.status(500).json({ message: "HTTP method not valid, only POST accepted" });
+        }
+    } catch (error) {
+        console.error('Error in signup.js:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-
 }

@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { connectMongo } from '../../../database/conn';
+import connectMongo from '../../../database/conn';
 import Users from '../../../model/Schema';
 import { compare } from 'bcryptjs';
 
@@ -23,44 +23,31 @@ export default NextAuth({
             clientSecret: process.env.GITHUB_SECRET
         }),
         CredentialsProvider({
-            name: 'Credentials',
+            name: "Credentials",
             async authorize(credentials, req) {
-                // Check user existence
-                const result = await Users.findOne({ email: credentials.email });
+                connectMongo().catch(error => { error: "Connection Failed...!" })
 
+                // check user existance
+                const result = await Users.findOne({ email: credentials.email })
                 if (!result) {
-                    throw new Error("No user found with this email. Please sign up.");
+                    throw new Error("No user Found with Email Please Sign Up...!")
                 }
 
-                // Compare passwords
+                // compare()
                 const checkPassword = await compare(credentials.password, result.password);
 
+                // incorrect password
                 if (!checkPassword || result.email !== credentials.email) {
-                    throw new Error("Username or password doesn't match");
+                    throw new Error("Username or Password doesn't match");
                 }
 
-                return Promise.resolve(result);
-            },
-        }),
+                return result;
+
+            }
+        })
     ],
     secret: process.env.JWT_SECRET,
     session: {
         strategy: 'jwt',
-    },
-    pages: {
-        session: '/auth/session',
-    },
-    callbacks: {
-        async session({ session, token, user }) {
-            // Calculate the time remaining until the session expires
-            const expiresIn = new Date(session.expires).getTime() - new Date().getTime();
-
-            // If the session is about to expire, refresh the token
-            if (expiresIn < 60 * 1000) {
-                return Promise.resolve({ ...session, expires: token.expires });
-            }
-
-            return Promise.resolve(session);
-        },
-    },
+    }
 })
