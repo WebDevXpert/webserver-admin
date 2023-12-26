@@ -29,13 +29,13 @@ const Sidebar = ({ children }) => {
 
   return (
     <div className='flex dark:bg-dark dark:text-white'>
-      <div className='sticky top-0 w-20 h-screen p-4 pb-10 bg-white dark:bg-dark dark:text-white border-r-[1px] flex flex-col justify-between'>
+      <div className='sticky top-0 w-30 h-screen p-4 pb-10 bg-white dark:bg-dark dark:text-white border-r-[1px] flex flex-col justify-between'>
         <div className='flex flex-col items-center dark:bg-dark dark:text-white text-center'>
-          <Link href='/'>
-            <div className='bg-purple-800 text-white p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
-              <RxSketchLogo size={35} />
-            </div>
-          </Link>
+
+          <div className='bg-purple-800 text-white p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
+            <RxSketchLogo size={35} />
+          </div>
+
           <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
           <AuthenticatedLink href='/'>
             <div className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white text-center'>

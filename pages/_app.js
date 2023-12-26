@@ -1,5 +1,4 @@
-import '@/styles/globals.css';
-import Sidebar from '../components/Sidebar';
+import { SessionProvider } from 'next-auth/react';
 import GeneralLayout from './general-layout';
 import { SessionProvider } from 'next-auth/react';
 

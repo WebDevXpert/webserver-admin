@@ -1,18 +1,86 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 const BillingForm = () => {
-    // Mock data for dropdowns (replace with actual data from your backend)
-    const accountNumbers = ["12345", "67890"];
+    const accountNumbers = ["42424242424242", "43434343434343"];
     const engineeringUnits = {
         electric: ["kWh", "MWh"],
         gas: ["Therms", "SCF"],
+    };
+
+    const [formData, setFormData] = useState({
+        accountNumber: '',
+        billType: 'electric',
+        serviceStartDate: '',
+        serviceEndDate: '',
+        billAmount: '',
+        usageAmount: '',
+        engineeringUnit: engineeringUnits['electric'][0],
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        if (name === 'billType') {
+            setFormData({
+                ...formData,
+                [name]: value,
+                engineeringUnit: engineeringUnits[value][0],
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const updatedFormData = {
+            ...formData,
+            accountNumber: formData.accountNumber || accountNumbers[0],
+            serviceStartDate: formData.serviceStartDate || new Date().toISOString(),
+            serviceEndDate: formData.serviceEndDate || new Date().toISOString(),
+            billAmount: parseFloat(formData.billAmount) || 0,
+            usageAmount: parseFloat(formData.usageAmount) || 0,
+        };
+
+        try {
+            const response = await fetch('/api/submitBillingForm', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedFormData),
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            console.log('Form submitted successfully');
+        } catch (error) {
+            console.error('Error:', error);
+        }
+
+        // Reset the form after successful submission
+        setFormData({
+            accountNumber: '',
+            billType: 'electric',
+            serviceStartDate: '',
+            serviceEndDate: '',
+            billAmount: '',
+            usageAmount: '',
+            engineeringUnit: engineeringUnits['electric'][0],
+        });
     };
 
     return (
         <div className='min-h-screen'>
             <div className="max-w-md mx-auto mt-10 p-5 bg-white rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-8 dark:bg-light-gray dark:text-white">Billing Form</h2>
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label htmlFor="accountNumber" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
                             Account Number
@@ -21,7 +89,7 @@ const BillingForm = () => {
                             id="accountNumber"
                             name="accountNumber"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            defaultValue="" // Set a default value or leave it empty
+                            defaultValue=""
                         >
                             <option value="" disabled>Select Account Number</option>
                             {accountNumbers.map((number) => (
@@ -38,6 +106,8 @@ const BillingForm = () => {
                             id="billType"
                             name="billType"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                            value={formData.billType}
+                            onChange={handleChange}
                         >
                             <option value="electric">Electric</option>
                             <option value="gas">Gas</option>
@@ -53,6 +123,8 @@ const BillingForm = () => {
                             id="serviceStartDate"
                             name="serviceStartDate"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                            value={formData.serviceStartDate}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -65,6 +137,8 @@ const BillingForm = () => {
                             id="serviceEndDate"
                             name="serviceEndDate"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                            value={formData.serviceEndDate}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -73,11 +147,13 @@ const BillingForm = () => {
                             Bill Amount ($)
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="billAmount"
                             name="billAmount"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
                             placeholder="Enter bill amount"
+                            value={formData.billAmount}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -86,11 +162,13 @@ const BillingForm = () => {
                             Usage Amount
                         </label>
                         <input
-                            type="text"
+                            type="number"
                             id="usageAmount"
                             name="usageAmount"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
                             placeholder="Enter usage amount"
+                            value={formData.usageAmount}
+                            onChange={handleChange}
                         />
                     </div>
 
@@ -102,9 +180,10 @@ const BillingForm = () => {
                             id="engineeringUnit"
                             name="engineeringUnit"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                            value={formData.engineeringUnit}
+                            onChange={handleChange}
                         >
-                            {/* Replace 'electric' with the actual value from the billType dropdown */}
-                            {engineeringUnits['electric'].map((unit) => (
+                            {engineeringUnits[formData.billType].map((unit) => (
                                 <option key={unit} value={unit}>{unit}</option>
                             ))}
                         </select>

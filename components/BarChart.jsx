@@ -28,13 +28,14 @@ const BarChart = () => {
 
   useEffect(() => {
     setChartData({
-      labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun'],
+      labels: ['Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
       datasets: [
         {
-          label: 'Sales $',
-          data: [18127, 22201, 19490, 17938, 24182, 17842, 22475],
+          label: 'Sales £',
+          data: [18127, 22201, 19490, 17938, 24182, 17842, 22475, 66755, 35690, 15560, 33589, 25678, 29786, 45876],
           borderColor: 'rgb(53, 162, 235)',
           backgroundColor: 'rgb(53, 162, 235, 0.4',
+
         },
       ]
     })
@@ -55,7 +56,7 @@ const BarChart = () => {
 
   return (
     <>
-      <div className='w-full md:col-span-2 relative lg:h-[70vh] h-[50vh] m-auto p-4 border rounded-lg bg-white dark:bg-light-gray dark:text-white'>
+      <div className=' w-[180vh]  relative lg:h-[70vh] h-[70vh] m-auto p-4 border rounded-lg bg-white dark:bg-light-gray dark:text-white'>
         <Bar data={chartData} options={chartOptions} />
       </div>
     </>
