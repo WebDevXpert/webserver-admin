@@ -3,7 +3,7 @@ import React from 'react';
 const LoginForm = () => {
     return (
         <div className="min-h-screen">
-            <div className="max-w-md mx-auto mt-10 p-5 bg-white rounded-md shadow-md dark:bg-light-gray dark:text-white">
+            <div className=" max-w-md mx-auto mt-10 p-5 bg-white rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-8">Login</h2>
                 <form>
                     <div className="mb-4">

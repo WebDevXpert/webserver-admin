@@ -6,7 +6,7 @@ const TopCards = () => {
             <div className='lg:col-span-3 w-1/2 bg-white flex justify-between  border p-4 rounded-lg dark:bg-light-gray dark:text-white'>
                 <div className='flex flex-col pb-4 dark:bg-light-gray dark:text-white'>
                     <p className='text-2xl font-bold dark:bg-light-gray dark:text-white'>£7,846</p>
-                    <p className='text-gray-600 dark:bg-light-gray dark:text-white'>Monthly Carbon</p>
+                    <p className='text-gray-600 dark:bg-light-gray dark:text-white mt-1'>Monthly Carbon</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-light-gray dark:text-white'>
                     <span className='text-green-700 text-lg dark:bg-light-gray dark:text-white'>+18%</span>
@@ -15,7 +15,7 @@ const TopCards = () => {
             <div className='lg:col-span-3 w-1/2 bg-white flex justify-between border p-4 rounded-lg dark:bg-light-gray dark:text-white'>
                 <div className='flex flex-col pb-4 dark:bg-light-gray dark:text-white'>
                     <p className='text-2xl font-bold dark:bg-light-gray dark:text-white'>£1,437,876</p>
-                    <p className='text-gray-600 dark:bg-light-gray dark:text-white'>YTD Carbon</p>
+                    <p className='text-gray-600 dark:bg-light-gray dark:text-white mt-2'>YTD Carbon</p>
                 </div>
                 <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-light-gray dark:text-white'>
                     <span className='text-green-700 text-lg dark:bg-light-gray dark:text-white'>+11%</span>
