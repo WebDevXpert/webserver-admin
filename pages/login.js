@@ -1,19 +1,19 @@
 import Head from 'next/head'
 import Layout from '../layout/layout'
 import Link from 'next/link'
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { useFormik } from 'formik';
+import login_validate from '../lib/validate';
 import styles from '../styles/Form.module.css';
 import Image from 'next/image'
 import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useState } from 'react';
-import { signIn, signOut } from "next-auth/react"
-import { useFormik } from 'formik';
-import login_validate from '../lib/validate';
-import { useRouter } from 'next/router';
-
 
 export default function Login() {
     const [show, setShow] = useState(false);
     const router = useRouter();
+    const [isDarkMode, setIsDarkMode] = useState(false); // Add state for theme
 
     const formik = useFormik({
         initialValues: {
@@ -25,14 +25,14 @@ export default function Login() {
     });
 
     async function onSubmit(values) {
-        const { error } = await signIn('credentials', {
+        const result = await signIn('credentials', {
             redirect: false,
             email: values.email,
             password: values.password,
-            callbackUrl: '/'
+            callbackUrl: '/',
         });
 
-        if (!error) {
+        if (!result.error) {
             router.push('/');
         }
     }
@@ -47,16 +47,20 @@ export default function Login() {
         signIn('github', { callbackUrl: "http://localhost:3000" })
     }
 
+    const toggleTheme = () => {
+        // Toggle between light and dark mode
+        setIsDarkMode(prevMode => !prevMode);
+    };
+
     return (
         <Layout>
-
             <Head>
                 <title>Login</title>
             </Head>
-            <section className='w-3/4 mx-auto flex flex-col gap-10'>
+            <section className={`w-3/4 mx-auto flex flex-col gap-10 ${isDarkMode ? 'dark' : ''}`}>
                 <div className="title">
-                    <h1 className='text-gray-800 text-4xl font-bold py-4'>Explore</h1>
-                    <p className='w-3/4 mx-auto text-gray-400'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
+                    <h1 className={`text-${isDarkMode ? 'white' : 'gray-800'} text-4xl font-bold py-4`}>Explore</h1>
+                    <p className={`w-3/4 mx-auto text-${isDarkMode ? 'gray-300' : 'gray-400'}`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
                 </div>
 
                 <form className='flex flex-col gap-5' onSubmit={formik.handleSubmit}>
@@ -65,13 +69,12 @@ export default function Login() {
                             type="email"
                             name='email'
                             placeholder='Email'
-                            className={styles.input_text}
+                            className={`${styles.input_text} ${isDarkMode ? 'dark-mode-input' : ''}`}
                             {...formik.getFieldProps('email')}
                         />
                         <span className='icon flex items-center px-4'>
                             <HiAtSymbol size={25} />
                         </span>
-
                     </div>
 
                     <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
@@ -105,11 +108,10 @@ export default function Login() {
                     </div>
                 </form>
 
-                <p className='text-center text-gray-400 '>
-                    don't have an account yet? <Link href={'/register'} className='text-blue-700'>Sign Up</Link>
+                <p className={`text-center text-${isDarkMode ? 'gray-300' : 'gray-400'}`}>
+                    don't have an account yet? <Link href={'/register'} className={`text-${isDarkMode ? 'blue-300' : 'blue-700'}`}>Sign Up</Link>
                 </p>
             </section>
-
         </Layout>
     )
 }
