@@ -12,8 +12,12 @@ const Header = () => {
         <div className='flex flex-1 items-center justify-end'>
           <span className='mr-4'>Welcome, {session.user.email}</span>
           <ThemeToggle />
-        )}
         </div>
+      ) : (
+        <div className='flex flex-1 items-center justify-end'>
+          <ThemeToggle />
+        </div>
+      )}
     </div>
   );
 };
