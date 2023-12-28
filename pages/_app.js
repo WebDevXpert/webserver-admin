@@ -1,6 +1,7 @@
 import { SessionProvider } from 'next-auth/react';
 import GeneralLayout from './general-layout';
-import { SessionProvider } from 'next-auth/react';
+import Sidebar from '@/components/Sidebar';
+import '../styles/globals.css';
 
 function App({ Component, pageProps }) {
   return (

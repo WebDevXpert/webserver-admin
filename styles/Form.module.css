@@ -11,6 +11,7 @@
     width: 100%;
     padding: 1rem;
     border: 1px solid #3498db;
+    color: black;
     border-radius: 0.5rem;
     background-color: #ecf0f1;
     outline: none;
@@ -19,7 +20,7 @@
 
 .input_text:focus {
     border: 1px solid #8e44ad;
-    color: #6366f1;
+    color: #030305;
 }
 
 /* Styling for primary button */
@@ -37,8 +38,8 @@
 
 .button:hover {
     background: linear-gradient(to right, #ecf0f1, #bdc3c7);
-    border: 1px solid #3498db;
-    color: #2c3e50;
+    border: 1px solid #082e47;
+    color: #a5b2c0;
 }
 
 /* Styling for custom button */

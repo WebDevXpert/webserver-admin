@@ -1,6 +1,5 @@
-// Header.js
 import React from 'react';
-import { useSession, signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import ThemeToggle from './ThemeToggle';
 
 const Header = () => {
@@ -9,16 +8,16 @@ const Header = () => {
   return (
     <div className='flex justify-between px-4 pt-4 dark:bg-medium dark:text-white py-3'>
       <h2>Dashboard</h2>
-      {session ? (
-        <div className='flex flex-1 items-center justify-end'>
-          <span className='mr-4'>Welcome, {session.user.email}</span>
+      <div className='flex flex-1 items-center justify-end'>
+        {session ? (
+          <>
+            <span className='mr-4'>Welcome, {session.user.name || session.user.email}</span>
+            <ThemeToggle />
+          </>
+        ) : (
           <ThemeToggle />
-        </div>
-      ) : (
-        <div className='flex flex-1 items-center justify-end'>
-          <ThemeToggle />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
