@@ -40,8 +40,8 @@ const OnboardForm = () => {
     };
 
     return (
-        <div className='min-h-screen'>
-            <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-md shadow-md dark:bg-light-gray dark:text-white">
+        <div className='min-h-screen flex items-center'>
+            <div className="max-w-md mx-auto p-8 bg-indigo-500 rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-4 dark:bg-light-gray dark:text-white">Site Onboard Form</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
