@@ -16,7 +16,7 @@ const Sidebar = ({ children }) => {
 
   // Function to check if the user is authenticated
   const isAuthenticated = () => {
-    return session !== null;
+    return session?.status === "authenticated";
   };
 
   // Wrapper for links that checks authentication
@@ -34,7 +34,9 @@ const Sidebar = ({ children }) => {
         <div className='flex flex-col items-center dark:bg-dark dark:text-white text-center'>
 
           <div className='bg-purple-800 text-white p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
-            <RxSketchLogo size={35} />
+            <Link href="/">
+              <RxSketchLogo size={35} />
+            </Link>
           </div>
 
           <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
@@ -57,12 +59,10 @@ const Sidebar = ({ children }) => {
             </div>
           </AuthenticatedLink>
           {isAuthenticated() ? (
-            <>
-              <div className='bg-gray-100  cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white' onClick={logoutHandler}>
-                <AiOutlineLogin size={35} className='w-full' />
-                <h1 className='text-sm mt-1'>Logout</h1>
-              </div>
-            </>
+            <div className='bg-gray-100  cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white' onClick={logoutHandler}>
+              <AiOutlineLogin size={35} className='w-full' />
+              <h1 className='text-sm mt-1'>Logout</h1>
+            </div>
           ) : (
             <Link href='/login'>
               <div className='bg-gray-100  cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>

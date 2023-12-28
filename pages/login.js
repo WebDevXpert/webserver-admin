@@ -13,7 +13,7 @@ import { useState } from 'react';
 export default function Login() {
     const [show, setShow] = useState(false);
     const router = useRouter();
-    const [isDarkMode, setIsDarkMode] = useState(false); // Add state for theme
+    const [isDarkMode, setIsDarkMode] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -25,15 +25,29 @@ export default function Login() {
     });
 
     async function onSubmit(values) {
-        const result = await signIn('credentials', {
-            redirect: false,
-            email: values.email,
-            password: values.password,
-            callbackUrl: '/',
-        });
+        try {
+            const result = await signIn('credentials', {
+                redirect: false,
+                email: values.email,
+                password: values.password,
+                callbackUrl: '/',
+            });
 
-        if (!result.error) {
-            router.push('/');
+            if (!result.error) {
+                router.push('/');
+            } else {
+                console.error('Authentication error:', result.error);
+                let errorMessage = 'An unexpected error occurred. Please try again.';
+
+                if (result.error.message.includes('Invalid email or password')) {
+                    errorMessage = 'Invalid email or password. Please try again.';
+                }
+
+                alert(errorMessage);
+            }
+        } catch (error) {
+            console.error('Error during login:', error);
+            alert('An unexpected error occurred. Please try again later.');
         }
     }
 
