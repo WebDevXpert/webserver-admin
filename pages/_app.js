@@ -5,7 +5,7 @@ import "../styles/globals.css"
 
 function App({ Component, pageProps }) {
   return (
-    <SessionProvider>
+    <SessionProvider session={pageProps.session}>
       <GeneralLayout>
         <Sidebar>
           <Component {...pageProps} />

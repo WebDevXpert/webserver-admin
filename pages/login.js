@@ -1,20 +1,19 @@
-import Head from 'next/head'
-import Layout from '../layout/layout'
-import Link from 'next/link'
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import login_validate from '../lib/validate';
+import Head from 'next/head';
+import Link from 'next/link';
+// import Image from 'next/image';
+import Layout from '../layout/layout';
 import styles from '../styles/Form.module.css';
-import Image from 'next/image'
-import { HiAtSymbol, HiFingerPrint } from "react-icons/hi";
 import { useState } from 'react';
+import { useFormik } from 'formik';
+import { useRouter } from 'next/router';
+import login_validate from '../lib/validate';
+import { signIn, signOut } from "next-auth/react"
+import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
 
 export default function Login() {
-    const [show, setShow] = useState(false);
-    const router = useRouter();
-    const [isDarkMode, setIsDarkMode] = useState(false);
 
+    const [show, setShow] = useState(false)
+    const router = useRouter()
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -22,74 +21,59 @@ export default function Login() {
         },
         validate: login_validate,
         onSubmit
-    });
+    })
 
     async function onSubmit(values) {
-        try {
-            const result = await signIn('credentials', {
-                redirect: false,
-                email: values.email,
-                password: values.password,
-                callbackUrl: '/',
-            });
+        const status = await signIn('credentials', {
+            redirect: false,
+            email: values.email,
+            password: values.password,
+            callbackUrl: "/"
+        })
 
-            if (!result.error) {
-                router.push('/');
-            } else {
-                console.error('Authentication error:', result.error);
-                let errorMessage = 'An unexpected error occurred. Please try again.';
+        if (status.ok) router.push(status.url)
 
-                if (result.error.message.includes('Invalid email or password')) {
-                    errorMessage = 'Invalid email or password. Please try again.';
-                }
-
-                alert(errorMessage);
-            }
-        } catch (error) {
-            console.error('Error during login:', error);
-            alert('An unexpected error occurred. Please try again later.');
-        }
     }
 
-    // Google Handler function
-    async function handleGoogleSignin() {
-        signIn('google', { callbackUrl: "http://localhost:3000" })
-    }
+    // // Google Handler function
+    // async function handleGoogleSignin() {
+    //     signIn('google', { callbackUrl: "http://localhost:3000" })
+    // }
 
-    // Github Login 
-    async function handleGithubSignin() {
-        signIn('github', { callbackUrl: "http://localhost:3000" })
-    }
-
-    const toggleTheme = () => {
-        // Toggle between light and dark mode
-        setIsDarkMode(prevMode => !prevMode);
-    };
+    // // Github Login 
+    // async function handleGithubSignin() {
+    //     signIn('github', { callbackUrl: "http://localhost:3000" })
+    // }
 
     return (
         <Layout>
+
             <Head>
                 <title>Login</title>
             </Head>
-            <section className={`w-3/4 mx-auto flex flex-col gap-10 ${isDarkMode ? 'dark' : ''}`}>
+
+            <section className='w-3/4 mx-auto flex flex-col gap-10'>
                 <div className="title">
-                    <h1 className={`text-${isDarkMode ? 'white' : 'gray-800'} text-4xl font-bold py-4`}>Explore</h1>
-                    <p className={`w-3/4 mx-auto text-${isDarkMode ? 'gray-300' : 'gray-400'}`}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
+                    <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4'>Explore</h1>
+                    <p className='w-3/4 mx-auto text-gray-400'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
                 </div>
 
-                <form className='flex flex-col gap-5' onSubmit={formik.handleSubmit}>
+                {/* form */}
+                <form className='dark:bg-dark dark:text-white flex flex-col gap-5' onSubmit={formik.handleSubmit}>
                     <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
                         <input
                             type="email"
                             name='email'
                             placeholder='Email'
-                            className={`${styles.input_text} ${isDarkMode ? 'dark-mode-input' : ''}`}
+                            className={styles.input_text}
                             {...formik.getFieldProps('email')}
                         />
                         <span className='icon flex items-center px-4'>
                             <HiAtSymbol size={25} />
                         </span>
+
                     </div>
+                    {formik.errors.email && formik.touched.email ? <span className='text-rose-500'>{formik.errors.email}</span> : <></>}
 
                     <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
                         <input
@@ -105,27 +89,31 @@ export default function Login() {
 
                     </div>
 
+                    {formik.errors.password && formik.touched.password ? <span className='text-rose-500'>{formik.errors.password}</span> : <></>}
+                    {/* login buttons */}
                     <div className="input-button">
                         <button type='submit' className={styles.button}>
                             Login
                         </button>
                     </div>
-                    <div className="input-button">
+                    {/* <div className="input-button">
                         <button type='button' onClick={handleGoogleSignin} className={styles.button_custom}>
-                            Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} alt='Google' ></Image>
+                            Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} ></Image>
                         </button>
                     </div>
                     <div className="input-button">
                         <button type='button' onClick={handleGithubSignin} className={styles.button_custom}>
-                            Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25} alt='Github' ></Image>
+                            Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25}></Image>
                         </button>
-                    </div>
+                    </div> */}
                 </form>
 
-                <p className={`text-center text-${isDarkMode ? 'gray-300' : 'gray-400'}`}>
-                    don't have an account yet? <Link href={'/register'} className={`text-${isDarkMode ? 'blue-300' : 'blue-700'}`}>Sign Up</Link>
+                {/* bottom */}
+                <p className='text-center text-gray-400 '>
+                    don't have an account yet? <Link href='/register' className='text-blue-700'>Sign Up</Link>
                 </p>
             </section>
+
         </Layout>
     )
 }

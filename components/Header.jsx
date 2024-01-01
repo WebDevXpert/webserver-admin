@@ -1,4 +1,3 @@
-// Header.js
 import React from 'react';
 import { useSession } from 'next-auth/react';
 import ThemeToggle from './ThemeToggle';
