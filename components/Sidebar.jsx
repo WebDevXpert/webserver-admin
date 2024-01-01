@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
@@ -25,14 +25,12 @@ const Sidebar = ({ children }) => {
     return session !== null;
   };
 
-  useEffect(() => {
-    if (!isAuthenticated() && router.pathname !== '/login') {
-      router.push('/login');
+  const AuthenticatedLink = ({ href, children }) => {
+    if (isAuthenticated()) {
+      return <Link href={href}>{children}</Link>;
+    } else {
+      return null;
     }
-  }, [session, router]);
-
-  const AuthenticatedLink = ({ href = '/', children }) => {
-    return isAuthenticated() ? <Link href={href}>{children}</Link> : null;
   };
 
   return (

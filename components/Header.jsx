@@ -10,7 +10,7 @@ const Header = () => {
       <h2 className='font-bold text-2xl'>Dashboard</h2>
       {session ? (
         <div className='flex flex-1 items-center justify-end'>
-          <span className='mr-4'>Welcome, {session.user.email}</span>
+          <span className='mr-4'>Welcome, {session.user.username}</span>
           <ThemeToggle />
         </div>
       ) : (
