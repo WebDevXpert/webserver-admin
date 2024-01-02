@@ -54,13 +54,13 @@ export default function Login() {
 
             <section className='w-3/4 mx-auto flex flex-col gap-10'>
                 <div className="title">
-                    <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4'>Explore</h1>
+                    <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4 hover:'>Login</h1>
                     <p className='w-3/4 mx-auto text-gray-400'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?</p>
                 </div>
 
                 {/* form */}
                 <form className='dark:bg-dark dark:text-white flex flex-col gap-5' onSubmit={formik.handleSubmit}>
-                    <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
+                    <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600 ' : ''}`}>
                         <input
                             type="email"
                             name='email'
@@ -73,7 +73,7 @@ export default function Login() {
                         </span>
 
                     </div>
-                    {formik.errors.email && formik.touched.email ? <span className='text-rose-500'>{formik.errors.email}</span> : <></>}
+                    {formik.errors.email && formik.touched.email ? <span className='text-rose-500 text-left mt-0'>{formik.errors.email}</span> : <></>}
 
                     <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
                         <input
@@ -83,13 +83,13 @@ export default function Login() {
                             className={styles.input_text}
                             {...formik.getFieldProps('password')}
                         />
-                        <span className='icon flex items-center px-4' onClick={() => setShow(!show)}>
+                        <span className='icon flex items-center  px-4' onClick={() => setShow(!show)}>
                             <HiFingerPrint size={25} />
                         </span>
 
                     </div>
 
-                    {formik.errors.password && formik.touched.password ? <span className='text-rose-500'>{formik.errors.password}</span> : <></>}
+                    {formik.errors.password && formik.touched.password ? <span className='text-rose-500 text-left mt-0'>{formik.errors.password}</span> : <></>}
                     {/* login buttons */}
                     <div className="input-button">
                         <button type='submit' className={styles.button}>
