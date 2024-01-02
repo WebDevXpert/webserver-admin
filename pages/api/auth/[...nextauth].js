@@ -1,27 +1,22 @@
 import NextAuth from 'next-auth';
-import GoogleProvider from 'next-auth/providers/google';
-import GithubProvider from 'next-auth/providers/github';
+// import GoogleProvider from "next-auth/providers/google";
+// import GithubProvider from 'next-auth/providers/github';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import connectMongo from '../../../database/conn';
-import Users from '../../../model/Schema';
+import connectMongo from '../../../database/conn'
+import Users from '../../../model/Schema'
 import { compare } from 'bcryptjs';
-
-connectMongo().catch(error => {
-    console.error('Connection Failed...!');
-    throw error;
-});
 
 export default NextAuth({
     providers: [
         // Google Provider
-        GoogleProvider({
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET
-        }),
-        GithubProvider({
-            clientId: process.env.GITHUB_ID,
-            clientSecret: process.env.GITHUB_SECRET
-        }),
+        // GoogleProvider({
+        //     clientId: process.env.GOOGLE_ID,
+        //     clientSecret: process.env.GOOGLE_SECRET
+        // }),
+        // GithubProvider({
+        //     clientId: process.env.GITHUB_ID,
+        //     clientSecret: process.env.GITHUB_SECRET
+        // }),
         CredentialsProvider({
             name: "Credentials",
             async authorize(credentials, req) {
@@ -50,4 +45,4 @@ export default NextAuth({
     session: {
         strategy: 'jwt',
     }
-})
+});
