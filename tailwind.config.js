@@ -20,4 +20,3 @@ module.exports = {
   plugins: [],
 };
 
-// #3D5156
