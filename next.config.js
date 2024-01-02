@@ -1,6 +1,13 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  swcMinify: true,
+  env: {
+    GOOGLE_ID: '691983221309-i1k2atbg8o4b3vm45i4jfeabf7a1tac9.apps.googleusercontent.com',
+    GOOGLE_SECRET: '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',
+    GITHUB_ID: 'baf9daf11e3f94075168',
+    GITHUB_SECRET: '63b9f52bd12f05ae15c53f64e14b877850c2ca91',
+    JWT_SECRET: 'khgfkhfhsbdshbdshbdifvbdsh',
+    MONGO_URL: 'mongodb+srv://TastyDelights:TastyDelights@cluster0.rezrvcy.mongodb.net/WebServer',
+  },
 }
-
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
 
 const OnboardForm = () => {
     const [formData, setFormData] = useState({
@@ -26,7 +25,6 @@ const OnboardForm = () => {
 
             if (response.ok) {
                 console.log('Form submitted successfully');
-                toast.success("Site onboard generated")
             } else {
                 console.error('Failed to submit form');
             }
