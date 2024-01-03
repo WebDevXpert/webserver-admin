@@ -1,4 +1,4 @@
-import { getSession, useSession } from 'next-auth/react';
+import { getSession, useSession, signOut } from 'next-auth/react';
 import { useEffect } from 'react';
 import TopCards from '../components/TopCards';
 import BarChart from '../components/BarChart';
@@ -19,11 +19,6 @@ export default function Home() {
         return <div>Loading...</div>;
     }
 
-    const handleLogout = async () => {
-        await signOut({ redirect: false });
-        router.push('/login');
-    };
-
     return (
         <>
             <Head>
@@ -37,33 +32,34 @@ export default function Home() {
                 <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
                     <BarChart />
                 </div>
-
-                {session && (
-                    <button onClick={handleLogout} className='bg-gray-100 hover:bg-gray-200 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
-                        <span>👤</span>
-                        <h1 className='text-xs'>Logout</h1>
-                    </button>
-                )}
             </main>
         </>
     );
 }
 
 export async function getServerSideProps(context) {
-    const session = await getSession(context);
+    const sessionPromise = getSession(context);
 
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false,
+    return sessionPromise
+        .then((session) => {
+            if (!session) {
+                return {
+                    redirect: {
+                        destination: '/login',
+                        permanent: false,
+                    },
+                };
+            }
+
+            return {
+                props: {
+                    session,
+                },
+            };
+        })
+        .catch(() => ({
+            props: {
+                session: null,
             },
-        };
-    }
-
-    return {
-        props: {
-            session,
-        },
-    };
+        }));
 }

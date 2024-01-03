@@ -5,10 +5,12 @@ import ThemeToggle from './ThemeToggle';
 const Header = () => {
   const { data: session } = useSession();
 
+  console.log(session);
+
   return (
     <div className='flex justify-between px-4 pt-4 dark:bg-medium dark:text-white py-3 '>
       <h2 className='font-bold text-2xl'>Dashboard</h2>
-      {session ? (
+      {session?.user ? (
         <div className='flex flex-1 items-center justify-end'>
           <span className='mr-4'>Welcome, {session.user.name}</span>
           <ThemeToggle />
