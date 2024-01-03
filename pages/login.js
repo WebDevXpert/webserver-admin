@@ -11,6 +11,7 @@ import { getSession, signIn, useSession } from "next-auth/react"
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
 
 export default function Login() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
     const { data: session } = useSession();
     const router = useRouter();
     const [showMessage, setShowMessage] = useState(false);
@@ -48,9 +49,9 @@ export default function Login() {
             });
 
             if (status.ok) {
-                router.push(status.url);
+                router.push(apiUrl);
             } else {
-                // Handle login failure, e.g., display an error message
+                console.log("status.error", status.error)
             }
         },
     });
