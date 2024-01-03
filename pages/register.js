@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { getSession, useSession } from 'next-auth/react';
 
 export default function Register() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -48,10 +49,10 @@ export default function Register() {
                 body: JSON.stringify(values),
             };
 
-            await fetch('http://localhost:3000/api/auth/signup', options)
+            await fetch(`${apiUrl}/api/auth/signup`, options)
                 .then((res) => res.json())
                 .then((data) => {
-                    if (data) router.push('http://localhost:3000');
+                    if (data) router.push(`${apiUrl}`);
                 });
         },
     });
