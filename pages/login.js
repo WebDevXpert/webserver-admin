@@ -50,6 +50,7 @@ export default function Login() {
 
             if (status.ok) {
                 router.push(apiUrl);
+                console.log("apiUrl", apiUrl)
             } else {
                 console.log("status.error", status.error)
             }
