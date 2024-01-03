@@ -12,14 +12,14 @@
     padding: 1rem;
     border: 1px solid #3498db;
     border-radius: 0.5rem;
-    background-color: #ecf0f1;
+    background-color: #0d2931;
     outline: none;
     transition: border-color 0.3s ease, color 0.3s ease;
 }
 
 .input_text:focus {
     border: 1px solid #8e44ad;
-    color: #6366f1;
+    color: #d0d1e6;
 }
 
 /* Styling for primary button */
@@ -29,16 +29,16 @@
     border: none;
     border-radius: 0.5rem;
     padding: 1rem;
-    color: #fff;
+    color: #ffffff;
     text-align: center;
     cursor: pointer;
     transition: 0.3s ease, border 0.3s ease, color 0.3s ease;
 }
 
 .button:hover {
-    background: linear-gradient(to right, #ecf0f1, #bdc3c7);
+    background: linear-gradient(to right, #3498db, #8e44ad);
     border: 1px solid #3498db;
-    color: #2c3e50;
+    color: #e4eaf0;
 }
 
 /* Styling for custom button */
@@ -54,5 +54,5 @@
 }
 
 .button_custom:hover {
-    background-color: #ecf0f1;
+    background-color: #052027;
 }

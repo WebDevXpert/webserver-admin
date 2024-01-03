@@ -2,7 +2,7 @@ import React from 'react';
 
 const RegistrationForm = () => {
     return (
-        <div className="min-h-screen">
+        <div className="min-h-full">
             <div className="max-w-md mx-auto mt-10 p-5 bg-white rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-8 dark:bg-light-gray dark:text-white">Register</h2>
                 <form>
