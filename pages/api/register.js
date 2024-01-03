@@ -10,6 +10,7 @@ import { registerValidate } from '../../lib/validate'
 import { useRouter } from 'next/router';
 
 export default function Register() {
+    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
     const [show, setShow] = useState({ password: false, cpassword: false })
     const router = useRouter()
@@ -31,10 +32,10 @@ export default function Register() {
             body: JSON.stringify(values)
         }
 
-        await fetch('http://localhost:3000/api/auth/signup', options)
+        await fetch(`${apiUrl}/api/auth/signup`, options)
             .then(res => res.json())
             .then((data) => {
-                if (data) router.push('http://localhost:3000')
+                if (data) router.push(`${apiUrl}`)
             })
     }
 
