@@ -8,7 +8,7 @@ const nextConfig = {
     GITHUB_SECRET: '63b9f52bd12f05ae15c53f64e14b877850c2ca91',
     JWT_SECRET: 'khgfkhfhsbdshbdshbdifvbdsh',
     MONGO_URL: 'mongodb+srv://TastyDelights:TastyDelights@cluster0.rezrvcy.mongodb.net/WebServer',
-    NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL
+    NEXT_PUBLIC_API_BASE_URL: 'https://webserver-admin.vercel.app'
   },
 }
 module.exports = nextConfig;
