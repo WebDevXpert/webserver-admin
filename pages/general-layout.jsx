@@ -11,7 +11,7 @@ const GeneralLayout = ({ children }) => {
         const checkAuth = async () => {
             const userSession = await getSession();
             if (!userSession && !['/login', '/register'].includes(router.pathname)) {
-                router.replace('/login');
+                router.push('/login');
             }
         };
 
