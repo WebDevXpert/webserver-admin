@@ -49,7 +49,7 @@ export default function Login() {
             });
 
             if (status.ok) {
-                router.push(apiUrl);
+                router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
                 console.log("apiUrl", apiUrl)
             } else {
                 console.log("status.error", status.error)
