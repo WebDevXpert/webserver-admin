@@ -12,9 +12,9 @@ export default function Home() {
 
     useEffect(() => {
         if (!session) {
-            // router.push('/login');
-            router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
-            console.log("apiUrl", apiUrl)
+            router.push('/login');
+            // router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
+            // console.log("apiUrl", apiUrl)
         }
     }, [session, router]);
 

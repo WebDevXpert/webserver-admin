@@ -16,9 +16,8 @@ const Sidebar = ({ children }) => {
   const logoutHandler = async () => {
     try {
       await signOut({ redirect: false });
-      // router.push('/login');
-      router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
-      console.log("process.env.NEXT_PUBLIC_PRODUCTION_URL", process.env.NEXT_PUBLIC_PRODUCTION_URL)
+      router.push('/login');
+      // router.push(apiUrl);
     } catch (error) {
       console.error("Error during logout:", error);
     }

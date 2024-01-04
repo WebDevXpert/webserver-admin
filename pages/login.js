@@ -50,9 +50,8 @@ export default function Login() {
             });
 
             if (status.ok) {
-                router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
+                router.push(apiUrl);
                 toast.success("User logged in")
-                console.log("apiUrl", apiUrl, process.env.NEXT_PUBLIC_PRODUCTION_URL)
             } else {
                 console.log("status.error", status.error)
                 toast.error(status.error)
