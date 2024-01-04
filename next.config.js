@@ -9,7 +9,7 @@ const nextConfig = {
     JWT_SECRET: 'khgfkhfhsbdshbdshbdifvbdsh',
     MONGO_URL: 'mongodb+srv://TastyDelights:TastyDelights@cluster0.rezrvcy.mongodb.net/WebServer',
     // NEXT_PUBLIC_API_BASE_URL:'https://webserver-admin.vercel.app'
-    NEXT_PUBLIC_API_BASE_URL:'http://localhost:3000'
+    NEXT_PUBLIC_API_BASE_URL:'https://webserver-admin.vercel.app'
   },
 }
 module.exports = nextConfig;
