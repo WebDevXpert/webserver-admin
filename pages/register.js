@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import { registerValidate } from '../lib/validate'
 import { useRouter } from 'next/router';
 import { getSession, useSession } from 'next-auth/react';
+import { toast } from 'react-toastify';
 
 export default function Register() {
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -49,11 +50,36 @@ export default function Register() {
                 body: JSON.stringify(values),
             };
 
-            await fetch(`${apiUrl}/api/auth/signup`, options)
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data) router.push(`${apiUrl}`);
-                });
+            // await fetch(`${apiUrl}/api/auth/signup`, options)
+            //     .then((res) => res.json())
+            //     .then((data) => {
+            //         if (data) {
+            //             router.push(`${apiUrl}`);
+            //             console.log("data", data)
+            //             toast.success("User registered successfully")
+            //         }
+            //         else {
+            //             toast.error(data.message)
+            //         }
+            //     })
+            try {
+                const response = await fetch(`${apiUrl}/api/auth/signup`, options);
+                const data = await response.json();
+
+                if (response.ok) {
+                    router.push(`${apiUrl}`);
+                    toast.success("User registered successfully");
+                } else {
+                    if (data.message) {
+                        toast.error(data.message);
+                    } else {
+                        toast.error("Failed to register user");
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+                toast.error("An unexpected error occurred");
+            }
         },
     });
 

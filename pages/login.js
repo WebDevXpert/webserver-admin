@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 import login_validate from '../lib/validate';
 import { getSession, signIn, useSession } from "next-auth/react"
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
+import { toast } from 'react-toastify';
 
 export default function Login() {
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -50,9 +51,11 @@ export default function Login() {
 
             if (status.ok) {
                 router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
+                toast.success("User logged in")
                 console.log("apiUrl", apiUrl, process.env.NEXT_PUBLIC_PRODUCTION_URL)
             } else {
                 console.log("status.error", status.error)
+                toast.error(status.error)
             }
         },
     });

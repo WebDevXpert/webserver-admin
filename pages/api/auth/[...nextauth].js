@@ -29,8 +29,11 @@ export default NextAuth({
 
                 const checkPassword = await compare(credentials.password, result.password);
 
-                if (!checkPassword || result.email !== credentials.email) {
-                    throw new Error("name or Password doesn't match");
+                // if (!checkPassword || result.email !== credentials.email) {
+                //     throw new Error("name or Password doesn't match");
+                // }
+                if (!checkPassword) {
+                    throw new Error("Invalid credentials")
                 }
 
                 return result;
