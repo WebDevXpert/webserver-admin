@@ -9,13 +9,16 @@ import { FaWpforms } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
 
 const Sidebar = ({ children }) => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
   const { data: session } = useSession();
   const router = useRouter();
 
   const logoutHandler = async () => {
     try {
       await signOut({ redirect: false });
-      router.push('/login');
+      // router.push('/login');
+      router.push(apiUrl);
+      console.log("apiUrl", apiUrl)
     } catch (error) {
       console.error("Error during logout:", error);
     }
