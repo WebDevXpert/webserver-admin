@@ -25,7 +25,8 @@ export default function Login() {
                 setShowMessage(true);
                 // }, 1000);
                 // setTimeout(() => {
-                router.push('/');
+                // router.push('/');
+                router.push(apiUrl);
                 setShowMessage(false)
                 // }, 1000);
             }
