@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const OnboardForm = () => {
     const [formData, setFormData] = useState({
@@ -25,11 +26,14 @@ const OnboardForm = () => {
 
             if (response.ok) {
                 console.log('Form submitted successfully');
+                toast.success("Onboard form created")
             } else {
                 console.error('Failed to submit form');
+                toast.error("Failed to submit form")
             }
         } catch (error) {
             console.error('Error:', error);
+            toast.error(error)
         }
 
         setFormData({
