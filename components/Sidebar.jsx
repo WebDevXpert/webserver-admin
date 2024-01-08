@@ -7,6 +7,7 @@ import { RiLoginBoxFill } from "react-icons/ri";
 import { AiOutlineLogin } from "react-icons/ai";
 import { FaWpforms } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
+import { toast } from 'react-toastify';
 
 const Sidebar = ({ children }) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -17,6 +18,7 @@ const Sidebar = ({ children }) => {
     try {
       await signOut({ redirect: false });
       router.push('/login');
+      toast.success("User logged out")
       // router.push(apiUrl);
     } catch (error) {
       console.error("Error during logout:", error);

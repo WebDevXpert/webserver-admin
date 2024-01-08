@@ -53,17 +53,16 @@ const TopCards = () => {
                     value={selectedBuNumber}
                     onChange={handleBuNumberChange}
                 >
-                    <option value="" disabled>Select BU Number</option>
+                    <option value="" selected disabled>Select BU Number</option>
                     {/* {buNumbers.map((buNumber) => ( */}
                     {/* <option key={buNumber._id} value={buNumber._id}>{buNumber.name}</option> */}
                     <>
-                        <option>All BU Number</option>
+                        <option>34</option>
+                        <option>89</option>
+                        <option>79</option>
+                        <option>45</option>
                         <option>65</option>
-                        <option>65</option>
-                        <option>65</option>
-                        <option>65</option>
-                        <option>65</option>
-                        <option>65</option>
+                        <option>37</option>
                     </>
                     {/* ))} */}
                 </select>
