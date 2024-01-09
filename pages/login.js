@@ -21,14 +21,14 @@ export default function Login() {
         const checkSession = async () => {
             const userSession = await getSession();
             if (userSession) {
-                // setTimeout(() => {
-                setShowMessage(true);
-                // }, 1000);
-                // setTimeout(() => {
-                // router.push('/');
-                router.push(apiUrl);
-                setShowMessage(false)
-                // }, 1000);
+                setTimeout(() => {
+                    setShowMessage(true);
+                }, 1000);
+                setTimeout(() => {
+                    router.push('/');
+                    router.push(apiUrl);
+                    setShowMessage(false)
+                }, 1000);
             }
         };
 

@@ -2,24 +2,18 @@ import connectMongo from '@/database/conn';
 import OnboardFormModel from '@/model/OnboardFormModel';
 
 export default async function handler(request, response) {
-    if (request.method === 'POST') {
-        try {
-            await connectMongo();
+    try {
+        await connectMongo();
 
-            // Save form data
-            const formData = new OnboardFormModel(request.body);
-            await formData.save();
-
-            // Fetch updated BU numbers
+        if (request.method === 'GET') {
             const { buNumbersCount, buNumbers } = await fetchUpdatedBUData();
-
             response.status(200).json({ buNumbersCount, buNumbers });
-        } catch (error) {
-            console.error('Error processing form submission:', error);
-            response.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            response.status(405).json({ message: 'Method Not Allowed' });
         }
-    } else {
-        response.status(405).json({ message: 'Method Not Allowed' });
+    } catch (error) {
+        console.error('Error:', error);
+        response.status(500).json({ error: 'Internal Server Error' });
     }
 }
 
