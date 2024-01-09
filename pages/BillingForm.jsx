@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { toast } from 'react-toastify';
 
 const BillingForm = () => {
     const accountNumbers = ["42424242424242", "43434343434343"];
@@ -60,8 +61,10 @@ const BillingForm = () => {
             }
 
             console.log('Form submitted successfully');
+            toast.success("Billing form created")
         } catch (error) {
             console.error('Error:', error);
+            toast.error(error)
         }
 
         // Reset the form after successful submission
