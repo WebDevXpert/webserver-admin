@@ -7,18 +7,22 @@ import Head from 'next/head';
 
 export default function Home() {
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
-        if (!session) {
-            router.push('/login');
-            // router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
-            // console.log("apiUrl", apiUrl)
+        if (status === 'loading') {
+            return;
         }
-    }, [session, router]);
 
-    if (!session) {
+        if (!session) {
+            router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
+            console.log("apiUrl", apiUrl)
+            router.push('/');
+        }
+    }, [session, status, router]);
+
+    if (status === 'loading') {
         return <div>Loading...</div>;
     }
 

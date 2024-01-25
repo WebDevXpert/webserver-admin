@@ -9,6 +9,7 @@ const onboardFormSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-const OnboardFormModel = mongoose.models.onboardForm || mongoose.model('onboardForm', onboardFormSchema);
+const OnboardFormModel =
+    mongoose.models.onboardForm || mongoose.model('onboardForm', onboardFormSchema);
 
 export default OnboardFormModel;

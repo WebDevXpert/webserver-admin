@@ -24,6 +24,9 @@ const OnboardForm = () => {
                 body: JSON.stringify(formData),
             });
 
+            const responseData = await response.json();
+            console.log('Server Response:', responseData);
+
             if (response.ok) {
                 console.log('Form submitted successfully');
                 toast.success("Onboard form created")
