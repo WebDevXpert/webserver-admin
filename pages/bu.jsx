@@ -2,10 +2,10 @@ import React from 'react'
 
 const Bu = () => {
     return (
-        <div className="items-center">
+        <div className="">
 
 
-            <div class="relative overflow-x-auto ">
+            <div class="relative  ">
                 <table class="w-full mt-40  text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-sm  text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-50">
                         <tr>
