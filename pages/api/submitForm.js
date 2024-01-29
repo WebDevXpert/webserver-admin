@@ -6,6 +6,17 @@ export default async function handler(request, response) {
         try {
             await connectMongo();
 
+            // Validate BU Number
+            const buNumberRegex = /^BU\d{2}[A-Z]$/;
+            if (!buNumberRegex.test(request.body.buNumber)) {
+                return response.status(400).json({ error: 'Invalid BU Number format' });
+            }
+
+            // Validate Account Number
+            if (!/^\d{1,11}$/.test(request.body.accountNumber)) {
+                return response.status(400).json({ error: 'Account Number should be 1 to 11 digits' });
+            }
+
             // Save form data
             const formData = new OnboardFormModel(request.body);
             await formData.save();
