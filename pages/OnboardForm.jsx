@@ -2,19 +2,29 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const OnboardForm = () => {
-    const [formData, setFormData] = useState({
+    const initialState = {
         buNumber: '',
         billType: 'Electric',
         accountNumber: '',
         grid: '',
-    });
+    };
+
+    const [formData, setFormData] = useState(initialState);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData((prevData) => ({
+            ...prevData,
+            [e.target.name]: e.target.value,
+        }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        const formDataWithDefaultGrid = {
+            ...formData,
+            grid: formData.billType === 'Electric' ? (formData.grid || 'AKGD') : '',
+        };
 
         try {
             const response = await fetch('/api/submitForm', {
@@ -22,7 +32,7 @@ const OnboardForm = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify(formDataWithDefaultGrid),
             });
 
             const responseData = await response.json();
@@ -30,26 +40,21 @@ const OnboardForm = () => {
 
             if (response.ok) {
                 console.log('Form submitted successfully');
-                toast.success("Onboard form created")
+                toast.success('Onboard form created');
             } else {
                 console.error('Failed to submit form');
-                toast.error("Failed to submit form")
+                toast.error('Failed to submit form');
             }
         } catch (error) {
             console.error('Error:', error);
-            toast.error(error)
+            toast.error(error.message || 'An error occurred');
         }
 
-        setFormData({
-            buNumber: '',
-            billType: 'Electric',
-            accountNumber: '',
-            grid: '',
-        });
+        setFormData(initialState);
     };
 
     return (
-        <div className='min-h-screen flex items-center'>
+        <div className="min-h-screen flex items-center">
             <div className="max-w-md mx-auto p-8 bg-indigo-500 rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-4 dark:bg-light-gray dark:text-white">Site Onboard Form</h2>
                 <form onSubmit={handleSubmit}>
@@ -58,14 +63,14 @@ const OnboardForm = () => {
                             BU Number
                         </label>
                         <input
-                            type="number"
+                            type="text"
                             id="buNumber"
                             name="buNumber"
                             value={formData.buNumber}
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
-                            maxLength="2"
+                            pattern="^BU\d{2}[A-Z]$"
                         />
                     </div>
 
@@ -99,6 +104,7 @@ const OnboardForm = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
+                            maxLength="11"
                         />
                     </div>
 
@@ -113,7 +119,8 @@ const OnboardForm = () => {
                                 value={formData.grid}
                                 onChange={handleChange}
                                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
-                                required>
+                                required
+                            >
                                 <option value="AKGD">AKGD</option>
                                 <option value="AKMS">AKMS</option>
                                 <option value="AKGD">AKGD</option>
