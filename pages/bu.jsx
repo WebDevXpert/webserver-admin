@@ -33,15 +33,14 @@ const Bu = () => {
 
     return (
         <div className="mt-8">
-            <h2 className="text-2xl font-semibold mb-4">Onboard Forms</h2>
             {loading ? (
                 <p>Loading...</p>
             ) : (
                 <div className="relative">
-                    <div className="mb-4">
-                        <label className="text-sm font-semibold">Sort By:</label>
+                    <div className="mb-4 flex justify-between">
+                        <h1 className='text-2xl font-bold ml-20'>Site Onboard</h1>
                         <select
-                            className="ml-2 px-2 py-1 border rounded-md bg-gray-300 dark:bg-gray-700 dark:text-gray-50"
+                            className="ml-20 mr-28  px-2 py-1 border rounded-md bg-gray-300 dark:bg-gray-700 dark:text-gray-50"
                             value={sortOrder}
                             onChange={(e) => handleSort(e.target.value)}
                         >
