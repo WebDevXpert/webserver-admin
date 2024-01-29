@@ -6,14 +6,21 @@ const TopCards = () => {
     const [selectedBuNumber, setSelectedBuNumber] = useState('');
 
     useEffect(() => {
-        fetch('/api/buNumbers')
-            .then(response => response.json())
-            .then(data => {
-                console.log("bu data", data);
+        const fetchBuNumbers = async () => {
+            try {
+                const response = await fetch('/api/buNumbers');
+                if (!response.ok) {
+                    throw new Error('Error fetching BU numbers');
+                }
+                const data = await response.json();
                 setBuNumbersCount(data.buNumbersCount);
                 setBuNumbers(data.buNumbers);
-            })
-            .catch(error => console.error('Error fetching BU numbers:', error));
+            } catch (error) {
+                console.error('Error fetching BU numbers:', error);
+            }
+        };
+
+        fetchBuNumbers();
     }, [selectedBuNumber]);
 
     const handleBuNumberChange = (event) => {
@@ -54,11 +61,12 @@ const TopCards = () => {
                     value={selectedBuNumber}
                     onChange={handleBuNumberChange}
                 >
-                    <option>All BU Number</option>
-                    {buNumbers.map((buNumber) => {
-                        console.log("buNumber", buNumber)
-                        return <option key={buNumber._id} value={buNumber._id}>{buNumber.buNumber}</option>
-                    })}
+                    <option>All BU Numbers</option>
+                    {buNumbers.map((buNumber) => (
+                        <option key={buNumber._id} value={buNumber._id}>
+                            {buNumber.buNumber}
+                        </option>
+                    ))}
                 </select>
             </div>
         </div>

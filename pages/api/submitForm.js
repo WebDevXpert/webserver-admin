@@ -16,7 +16,11 @@ export default async function handler(request, response) {
             response.status(200).json({ buNumbersCount, buNumbers });
         } catch (error) {
             console.error('Error processing form submission:', error);
-            response.status(500).json({ error: 'Internal Server Error' });
+            if (error.code === 11000) {
+                response.status(400).json({ error: 'Duplicate BU Number' });
+            } else {
+                response.status(500).json({ error: 'Internal Server Error' });
+            }
         }
     } else {
         response.status(405).json({ message: 'Method Not Allowed' });
