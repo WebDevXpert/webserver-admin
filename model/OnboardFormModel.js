@@ -5,6 +5,7 @@ const onboardFormSchema = new mongoose.Schema(
         buNumber: { type: Number, required: true, unique: true },
         billType: { type: String, required: true },
         accountNumber: { type: String, required: true },
+        grid: { type: String, required: true },
     },
     { timestamps: true }
 );
