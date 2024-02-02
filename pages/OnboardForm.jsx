@@ -6,7 +6,7 @@ const OnboardForm = () => {
         buNumber: '',
         billType: 'Electric',
         accountNumber: '',
-        grid: '',
+        grid: 'AKGD',
     };
 
     const [formData, setFormData] = useState(initialState);
@@ -21,18 +21,13 @@ const OnboardForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const formDataWithDefaultGrid = {
-            ...formData,
-            grid: formData.billType === 'Electric' ? (formData.grid || 'AKGD') : '',
-        };
-
         try {
             const response = await fetch('/api/submitForm', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formDataWithDefaultGrid),
+                body: JSON.stringify(formData),
             });
 
             const responseData = await response.json();
@@ -43,7 +38,7 @@ const OnboardForm = () => {
                 toast.success('Onboard form created');
             } else {
                 console.error('Failed to submit form');
-                toast.error('Failed to submit form');
+                toast.error(responseData.error || 'Failed to submit form');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -71,9 +66,10 @@ const OnboardForm = () => {
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
                             pattern="^BU\d{2}[A-Z]$"
+                            placeholder='BU65D or BU65DS'
+                            title="Please enter a valid BU number in the format BU + 2 digits + 1 uppercase letter"
                         />
                     </div>
-
                     <div className="mb-4 dark:bg-light-gray dark:text-white">
                         <label className="block text-gray-700 text-sm font-bold mb-2 dark:bg-light-gray dark:text-white" htmlFor="billType">
                             Bill Type
@@ -114,7 +110,7 @@ const OnboardForm = () => {
                                 Grid
                             </label>
                             <select
-                                id="text"
+                                id="grid"
                                 name="grid"
                                 value={formData.grid}
                                 onChange={handleChange}
