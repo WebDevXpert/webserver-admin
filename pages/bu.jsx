@@ -55,10 +55,10 @@ const Bu = () => {
                                     BU Number
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Bill Type
+                                    Account Number
                                 </th>
                                 <th scope="col" className="px-6 py-3">
-                                    Account Number
+                                    Bill Type
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     Grid
