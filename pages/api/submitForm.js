@@ -7,18 +7,24 @@ export default async function handler(request, response) {
             await connectMongo();
 
             // Validate BU Number
-            const buNumberRegex = /^BU\d{2}[A-Z]$/;
-            if (!buNumberRegex.test(request.body.buNumber)) {
+            const buNumberRegex = /^BU\d{2}[A-Z]?$/;
+            if (!buNumberRegex.test(request.body.buNumber.toUpperCase())) {
                 return response.status(400).json({ error: 'Invalid BU Number format' });
             }
 
             // Validate Account Number
-            if (!/^\d{1,11}$/.test(request.body.accountNumber)) {
-                return response.status(400).json({ error: 'Account Number should be 1 to 11 digits' });
+            const accountNumberRegex = /^[\d-]+$/;
+            if (!accountNumberRegex.test(request.body.accountNumber)) {
+                return response.status(400).json({ error: 'Account Number should only contain digits and hyphens' });
             }
 
             // Save form data
-            const formData = new OnboardFormModel(request.body);
+            const formData = new OnboardFormModel({
+                buNumber: request.body.buNumber.toUpperCase(),
+                billType: request.body.billType,
+                accountNumber: request.body.accountNumber,
+                grid: request.body.grid,
+            });
             await formData.save();
 
             // Fetch updated BU numbers
