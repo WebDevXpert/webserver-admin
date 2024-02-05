@@ -22,28 +22,28 @@ const OnboardForm = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('https://wxj7a06cdl.execute-api.us-east-1.amazonaws.com/default/carbonopsPutRecord', {
+            const response = await fetch('/api/submitForm', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    eventType: 'onboarding',
-                    message: formData,
-                }),
+                body: JSON.stringify(formData),
             });
 
+            const responseData = await response.json();
+            console.log('Server Response:', responseData);
+
             if (response.ok) {
-                console.log('Form submitted successfully to AWS Lambda');
+                console.log('Form submitted successfully');
                 toast.success('Onboard form created');
-                router.push('/bu');
+                window.location.href = "/bu";
             } else {
                 console.error('Failed to submit form');
-                toast.error('Failed to submit form');
+                toast.error(responseData.error || 'Failed to submit form');
             }
         } catch (error) {
             console.error('Error:', error);
-            toast.error('An error occurred');
+            toast.error(error.message || 'An error occurred');
         }
 
         setFormData(initialState);
@@ -66,9 +66,9 @@ const OnboardForm = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
-                            pattern="^BU\d{2}[A-Z]$"
+                            pattern="^BU\d{2,3}[A-Z]?$"
                             placeholder='BU65D or BU65DS'
-                            title="Please enter a valid BU number in the format BU + 2 digits + 1 uppercase letter"
+                            title="Please enter a valid BU number in the format BU + 2 or 3 digits + 1 uppercase letter"
                         />
                     </div>
                     <div className="mb-4 dark:bg-light-gray dark:text-white">
@@ -101,7 +101,9 @@ const OnboardForm = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
-                            maxLength="11"
+                            pattern="^[\w\-]+$"
+                            placeholder='123-A or ABC-123'
+                            title="Account Number should contain alphabets, digits, and hyphens"
                         />
                     </div>
 
@@ -111,7 +113,7 @@ const OnboardForm = () => {
                                 Grid
                             </label>
                             <select
-                                id="grid"
+                                id="text"
                                 name="grid"
                                 value={formData.grid}
                                 onChange={handleChange}
@@ -120,15 +122,6 @@ const OnboardForm = () => {
                             >
                                 <option value="AKGD">AKGD</option>
                                 <option value="AKMS">AKMS</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
-                                <option value="AKGD">AKGD</option>
                             </select>
                         </div>
                     )}
@@ -146,54 +139,3 @@ const OnboardForm = () => {
 };
 
 export default OnboardForm;
-
-
-// import React, { useState } from 'react';
-// import { toast } from 'react-toastify';
-
-// const OnboardForm = () => {
-//     const initialState = {
-//         buNumber: '',
-//         billType: 'Electric',
-//         accountNumber: '',
-//         grid: 'AKGD',
-//     };
-
-//     const [formData, setFormData] = useState(initialState);
-
-//     const handleChange = (e) => {
-//         setFormData((prevData) => ({
-//             ...prevData,
-//             [e.target.name]: e.target.value,
-//         }));
-//     };
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-
-//         try {
-//             const response = await fetch('/api/submitForm', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify(formData),
-//             });
-
-//             const responseData = await response.json();
-//             console.log('Server Response:', responseData);
-
-//             if (response.ok) {
-//                 console.log('Form submitted successfully');
-//                 toast.success('Onboard form created');
-//             } else {
-//                 console.error('Failed to submit form');
-//                 toast.error(responseData.error || 'Failed to submit form');
-//             }
-//         } catch (error) {
-//             console.error('Error:', error);
-//             toast.error(error.message || 'An error occurred');
-//         }
-
-//         setFormData(initialState);
-//     };
