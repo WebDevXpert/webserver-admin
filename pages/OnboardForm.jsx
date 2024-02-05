@@ -22,27 +22,28 @@ const OnboardForm = () => {
         e.preventDefault();
 
         try {
-            const response = await fetch('/api/submitForm', {
+            const response = await fetch('https://wxj7a06cdl.execute-api.us-east-1.amazonaws.com/default/carbonopsPutRecord', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(formData),
+                body: JSON.stringify({
+                    eventType: 'onboarding',
+                    message: formData,
+                }),
             });
 
-            const responseData = await response.json();
-            console.log('Server Response:', responseData);
-
             if (response.ok) {
-                console.log('Form submitted successfully');
+                console.log('Form submitted successfully to AWS Lambda');
                 toast.success('Onboard form created');
+                router.push('/bu');
             } else {
                 console.error('Failed to submit form');
-                toast.error(responseData.error || 'Failed to submit form');
+                toast.error('Failed to submit form');
             }
         } catch (error) {
             console.error('Error:', error);
-            toast.error(error.message || 'An error occurred');
+            toast.error('An error occurred');
         }
 
         setFormData(initialState);
@@ -145,3 +146,54 @@ const OnboardForm = () => {
 };
 
 export default OnboardForm;
+
+
+// import React, { useState } from 'react';
+// import { toast } from 'react-toastify';
+
+// const OnboardForm = () => {
+//     const initialState = {
+//         buNumber: '',
+//         billType: 'Electric',
+//         accountNumber: '',
+//         grid: 'AKGD',
+//     };
+
+//     const [formData, setFormData] = useState(initialState);
+
+//     const handleChange = (e) => {
+//         setFormData((prevData) => ({
+//             ...prevData,
+//             [e.target.name]: e.target.value,
+//         }));
+//     };
+
+//     const handleSubmit = async (e) => {
+//         e.preventDefault();
+
+//         try {
+//             const response = await fetch('/api/submitForm', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json',
+//                 },
+//                 body: JSON.stringify(formData),
+//             });
+
+//             const responseData = await response.json();
+//             console.log('Server Response:', responseData);
+
+//             if (response.ok) {
+//                 console.log('Form submitted successfully');
+//                 toast.success('Onboard form created');
+//             } else {
+//                 console.error('Failed to submit form');
+//                 toast.error(responseData.error || 'Failed to submit form');
+//             }
+//         } catch (error) {
+//             console.error('Error:', error);
+//             toast.error(error.message || 'An error occurred');
+//         }
+
+//         setFormData(initialState);
+//     };
