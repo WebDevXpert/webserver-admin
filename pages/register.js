@@ -48,6 +48,7 @@ export default function Register() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(values),
+                mode: "cors"
             };
 
             // await fetch(`${apiUrl}/api/auth/signup`, options)
