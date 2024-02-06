@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
@@ -14,9 +14,14 @@ const Sidebar = ({ children }) => {
   const { data: session } = useSession();
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
     setShowDropdown(prev => !prev);
+  };
+
+  const closeDropdown = () => {
+    setShowDropdown(false);
   };
 
   const logoutHandler = async () => {
@@ -42,72 +47,106 @@ const Sidebar = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    const handleRouteChange = () => {
+      closeDropdown();
+    };
+
+    router.events.on('routeChangeStart', handleRouteChange);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className='flex dark:bg-dark dark:text-white'>
-      <div className='sticky top-0 w-30 min-h-screen p-4 pb-10 bg-white dark:bg-dark dark:text-white border-r-[1px] flex flex-col justify-between'>
-        <div className='flex flex-col items-center dark:bg-dark dark:text-white text-center'>
-          <div className='bg-purple-800 text-white p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
-            <RxSketchLogo size={35} />
-          </div>
-
-          <span className='border-b-[1px] border-gray-200 w-full p-2'></span>
-
-          <AuthenticatedLink href='/'>
-            <div className='bg-gray-100 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white text-center'>
-              <RxDashboard size={35} className='w-full' />
-              <h1 className='text-sm mt-1'>Home</h1>
-            </div>
-          </AuthenticatedLink>
-          <AuthenticatedLink href='/BillingForm'>
-            <div className='bg-gray-100 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white text-center'>
-              <RiBillLine size={35} className='w-full' />
-              <h1 className='text-sm mt-1'>Bill Input</h1>
-            </div>
-          </AuthenticatedLink>
-          <div className='relative'>
-            <button
-              onClick={toggleDropdown}
-              className='bg-gray-100 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white text-center w-full'
-            >
-              <FaWpforms size={40} className='w-full' />
-              <h1 className='text-sm mt-1'>Site Administration</h1>
-            </button>
-            {showDropdown && (
-              <div className='absolute top-14 left-0 w-full bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
-                <Link href='/OnboardForm'>
-                  <div className='p-3 hover:bg-gray-100 dark:hover:bg-dark'>
-                    <FaWpforms size={40} className='w-full' />
-                    <h1 className='text-sm mt-1'>Site Onboarding</h1>
-                  </div>
-                </Link>
-                <Link href='/bu'>
-                  <div className='p-3 hover:bg-gray-100 dark:hover:bg-dark'>
-                    <FaWpforms size={40} className='w-full' />
-                    <h1 className='text-sm mt-1'>Onboarded List</h1>
-                  </div>
-                </Link>
+    <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
+      <div className='flex-grow flex flex-col sm:flex-row'>
+        <div className='w-full sm:w-64 bg-white dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
+          <div className='p-4'>
+            <div className='flex items-center justify-center mb-8'>
+              <div className='bg-purple-800 text-white p-3 rounded-full'>
+                <RxSketchLogo size={35} />
               </div>
+            </div>
+            <div className='space-y-4'>
+              <AuthenticatedLink href='/'>
+                <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                  <RxDashboard size={20} />
+                  <span className='ml-2'>Home</span>
+                </div>
+              </AuthenticatedLink>
+              <AuthenticatedLink href='/BillingForm'>
+                <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                  <RiBillLine size={20} />
+                  <span className='ml-2'>Bill Input</span>
+                </div>
+              </AuthenticatedLink>
+              <div className='relative' ref={dropdownRef}>
+                <button
+                  onClick={toggleDropdown}
+                  className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
+                >
+                  <div className='flex items-center'>
+                    <FaWpforms size={20} />
+                    <span className='ml-2'>Site Administration</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M10 16a1 1 0 0 1-.707-1.707l4-4a1 1 0 0 1 1.414 1.414l-4 4A.997.997 0 0 1 10 16z" clipRule="evenodd" />
+                      <path fillRule="evenodd" d="M10 4a1 1 0 0 1 .707 1.707l-4 4a1 1 0 0 1-1.414-1.414l4-4A.997.997 0 0 1 10 4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </button>
+                {showDropdown && (
+                  <div className='absolute left-0 top-full w-full mt-2 py-2 bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
+                    <AuthenticatedLink href='/OnboardForm'>
+                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                        <FaWpforms size={20} />
+                        <span className='ml-2'>Site Onboarding</span>
+                      </div>
+                    </AuthenticatedLink>
+                    <AuthenticatedLink href='/bu'>
+                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                        <FaWpforms size={20} />
+                        <span className='ml-2'>Onboarded List</span>
+                      </div>
+                    </AuthenticatedLink>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+          <div className='mt-auto p-4'>
+            {isAuthenticated() ? (
+              <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg' onClick={logoutHandler}>
+                <AiOutlineLogin size={20} />
+                <span className='ml-2'>Logout</span>
+              </div>
+            ) : (
+              <Link href='/login'>
+                <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                  <RiLoginBoxFill size={20} />
+                  <span className='ml-2'>Login</span>
+                </div>
+              </Link>
             )}
           </div>
-
-          {isAuthenticated() ? (
-            <>
-              <div className='bg-gray-100 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white' onClick={logoutHandler}>
-                <AiOutlineLogin size={35} className='w-full' />
-                <h1 className='text-sm mt-1'>Logout</h1>
-              </div>
-            </>
-          ) : (
-            <Link href='/login'>
-              <div className='bg-gray-100 cursor-pointer my-4 p-3 rounded-lg inline-block dark:bg-dark dark:text-white'>
-                <RiLoginBoxFill size={35} className='w-full' />
-                <h1 className='text-xs'>Login</h1>
-              </div>
-            </Link>
-          )}
         </div>
+        <main className='flex-1'>{children}</main>
       </div>
-      <main className='ml-20 w-full'>{children}</main>
     </div>
   );
 };
