@@ -2,53 +2,81 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const BillingForm = () => {
-    const initialState = {
+    const accountNumbers = ["42424242424242", "43434343434343"];
+    const engineeringUnits = {
+        electric: ["kWh", "MWh"],
+        gas: ["Therms", "SCF"],
+    };
+
+    const [formData, setFormData] = useState({
         accountNumber: '',
-        billType: 'Electric',
+        billType: 'electric',
         serviceStartDate: '',
         serviceEndDate: '',
         billAmount: '',
         usageAmount: '',
-        engineeringUnit: 'kWh',
-    };
-
-    const [formData, setFormData] = useState(initialState);
+        engineeringUnit: engineeringUnits['electric'][0],
+    });
 
     const handleChange = (e) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            [e.target.name]: e.target.value,
-        }));
+        const { name, value } = e.target;
+
+        if (name === 'billType') {
+            setFormData({
+                ...formData,
+                [name]: value,
+                engineeringUnit: engineeringUnits[value][0],
+            });
+        } else {
+            setFormData({
+                ...formData,
+                [name]: value,
+            });
+        }
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const updatedFormData = {
+            ...formData,
+            accountNumber: formData.accountNumber || accountNumbers[0],
+            serviceStartDate: formData.serviceStartDate || new Date().toISOString(),
+            serviceEndDate: formData.serviceEndDate || new Date().toISOString(),
+            billAmount: parseFloat(formData.billAmount) || 0,
+            usageAmount: parseFloat(formData.usageAmount) || 0,
+        };
+
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/carbonopsPutRecord`, {
+            const response = await fetch('/api/submitBillingForm', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    eventType: 'billinput',
-                    message: formData,
-                }),
+                body: JSON.stringify(updatedFormData),
             });
 
-            if (response.ok) {
-                console.log('Billing form submitted successfully to AWS Lambda');
-                toast.success('Billing form created');
-            } else {
-                console.error('Failed to submit billing form');
-                toast.error('Failed to submit billing form');
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
+            console.log('Form submitted successfully');
+            toast.success("Billing form created")
         } catch (error) {
             console.error('Error:', error);
-            toast.error('An error occurred');
+            toast.error(error)
         }
 
-        setFormData(initialState);
+        // Reset the form after successful submission
+        setFormData({
+            accountNumber: '',
+            billType: 'electric',
+            serviceStartDate: '',
+            serviceEndDate: '',
+            billAmount: '',
+            usageAmount: '',
+            engineeringUnit: engineeringUnits['electric'][0],
+        });
     };
 
     return (
@@ -179,85 +207,3 @@ const BillingForm = () => {
 };
 
 export default BillingForm;
-
-
-// import React, { useState } from 'react';
-// import { toast } from 'react-toastify';
-
-// const BillingForm = () => {
-//     const accountNumbers = ["42424242424242", "43434343434343"];
-//     const engineeringUnits = {
-//         electric: ["kWh", "MWh"],
-//         gas: ["Therms", "SCF"],
-//     };
-
-//     const [formData, setFormData] = useState({
-//         accountNumber: '',
-//         billType: 'electric',
-//         serviceStartDate: '',
-//         serviceEndDate: '',
-//         billAmount: '',
-//         usageAmount: '',
-//         engineeringUnit: engineeringUnits['electric'][0],
-//     });
-
-//     const handleChange = (e) => {
-//         const { name, value } = e.target;
-
-//         if (name === 'billType') {
-//             setFormData({
-//                 ...formData,
-//                 [name]: value,
-//                 engineeringUnit: engineeringUnits[value][0],
-//             });
-//         } else {
-//             setFormData({
-//                 ...formData,
-//                 [name]: value,
-//             });
-//         }
-//     };
-
-//     const handleSubmit = async (e) => {
-//         e.preventDefault();
-
-//         const updatedFormData = {
-//             ...formData,
-//             accountNumber: formData.accountNumber || accountNumbers[0],
-//             serviceStartDate: formData.serviceStartDate || new Date().toISOString(),
-//             serviceEndDate: formData.serviceEndDate || new Date().toISOString(),
-//             billAmount: parseFloat(formData.billAmount) || 0,
-//             usageAmount: parseFloat(formData.usageAmount) || 0,
-//         };
-
-//         try {
-//             const response = await fetch('/api/submitBillingForm', {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json',
-//                 },
-//                 body: JSON.stringify(updatedFormData),
-//             });
-
-//             if (!response.ok) {
-//                 throw new Error(`HTTP error! Status: ${response.status}`);
-//             }
-
-//             console.log('Form submitted successfully');
-//             toast.success("Billing form created")
-//         } catch (error) {
-//             console.error('Error:', error);
-//             toast.error(error)
-//         }
-
-//         // Reset the form after successful submission
-//         setFormData({
-//             accountNumber: '',
-//             billType: 'electric',
-//             serviceStartDate: '',
-//             serviceEndDate: '',
-//             billAmount: '',
-//             usageAmount: '',
-//             engineeringUnit: engineeringUnits['electric'][0],
-//         });
-//     };
