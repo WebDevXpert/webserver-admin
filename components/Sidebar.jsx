@@ -96,20 +96,23 @@ const Sidebar = ({ children }) => {
                   <span className='ml-2'>Bill Input</span>
                 </div>
               </AuthenticatedLink>
+
               <div className='relative' ref={dropdownRef}>
-                <button
-                  onClick={toggleDropdown}
-                  className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
-                >
-                  <div className='flex items-center'>
-                    <FaWpforms size={20} />
-                    <span className='ml-2'>Site Administration</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M10 16a1 1 0 0 1-.707-1.707l4-4a1 1 0 0 1 1.414 1.414l-4 4A.997.997 0 0 1 10 16z" clipRule="evenodd" />
-                      <path fillRule="evenodd" d="M10 4a1 1 0 0 1 .707 1.707l-4 4a1 1 0 0 1-1.414-1.414l4-4A.997.997 0 0 1 10 4z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                </button>
+                <AuthenticatedLink href='/OnboardForm'>
+                  <button
+                    onClick={toggleDropdown}
+                    className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
+                  >
+                    <div className='flex items-center'>
+                      <FaWpforms size={20} />
+                      <span className='ml-2'>Site Administration</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 16a1 1 0 0 1-.707-1.707l4-4a1 1 0 0 1 1.414 1.414l-4 4A.997.997 0 0 1 10 16z" clipRule="evenodd" />
+                        <path fillRule="evenodd" d="M10 4a1 1 0 0 1 .707 1.707l-4 4a1 1 0 0 1-1.414-1.414l4-4A.997.997 0 0 1 10 4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                  </button>
+                </AuthenticatedLink>
                 {showDropdown && (
                   <div className='absolute left-0 top-full w-full mt-2 py-2 bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
                     <AuthenticatedLink href='/OnboardForm'>
