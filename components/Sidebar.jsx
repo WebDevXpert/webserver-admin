@@ -76,7 +76,7 @@ const Sidebar = ({ children }) => {
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
       <div className='flex-grow flex flex-col sm:flex-row'>
-        <div className='w-full sm:w-64 bg-white dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
+        <div className='w-full sm:w-48 bg-white dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
           <div className='p-4'>
             <div className='flex items-center justify-center mb-8'>
               <div className='bg-purple-800 text-white p-3 rounded-full'>
@@ -97,8 +97,8 @@ const Sidebar = ({ children }) => {
                 </div>
               </AuthenticatedLink>
 
-              <div className='relative' ref={dropdownRef}>
-                <AuthenticatedLink href='/OnboardForm'>
+              {isAuthenticated() && (
+                <div className='relative' ref={dropdownRef}>
                   <button
                     onClick={toggleDropdown}
                     className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
@@ -112,24 +112,24 @@ const Sidebar = ({ children }) => {
                       </svg>
                     </div>
                   </button>
-                </AuthenticatedLink>
-                {showDropdown && (
-                  <div className='absolute left-0 top-full w-full mt-2 py-2 bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
-                    <AuthenticatedLink href='/OnboardForm'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                        <FaWpforms size={20} />
-                        <span className='ml-2'>Site Onboarding</span>
-                      </div>
-                    </AuthenticatedLink>
-                    <AuthenticatedLink href='/bu'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                        <FaWpforms size={20} />
-                        <span className='ml-2'>Onboarded List</span>
-                      </div>
-                    </AuthenticatedLink>
-                  </div>
-                )}
-              </div>
+                  {showDropdown && (
+                    <div className='absolute left-0 top-full w-full mt-2 py-2 bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
+                      <AuthenticatedLink href='/OnboardForm'>
+                        <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                          <FaWpforms size={20} />
+                          <span className='ml-2'>Site Onboarding</span>
+                        </div>
+                      </AuthenticatedLink>
+                      <AuthenticatedLink href='/bu'>
+                        <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                          <FaWpforms size={20} />
+                          <span className='ml-2'>Onboarded List</span>
+                        </div>
+                      </AuthenticatedLink>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
           <div className='mt-auto p-4'>

@@ -84,11 +84,11 @@ export default function Login() {
                 </div>
             ) : (
 
-                <section className='w-3/4 mx-auto flex flex-col gap-10'>
+                <section className='w-full mx-auto flex flex-col gap-10'>
                     <div className='title'>
-                        <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4'>Explore</h1>
-                        <p className='w-3/4 mx-auto text-gray-400'>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, officia?
+                        <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4'>Welcome to Carbonops!</h1>
+                        <p className='w-3/4 mx-auto text-xl text-gray-400'>
+                            Please Login!
                         </p>
                     </div>
                     <form className='dark:bg-dark dark:text-white flex flex-col gap-5' onSubmit={formik.handleSubmit}>
