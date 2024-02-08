@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { IoIosArrowDropdown } from "react-icons/io";
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
 import { RxSketchLogo, RxDashboard } from 'react-icons/rx';
@@ -17,12 +18,15 @@ const Sidebar = ({ children }) => {
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
-    setShowDropdown(prev => !prev);
+    setShowDropdown((prev) => !prev);
   };
 
   const closeDropdown = () => {
     setShowDropdown(false);
   };
+
+  const [logoutButtonPosition, setLogoutButtonPosition] = useState('');
+
 
   const logoutHandler = async () => {
     try {
@@ -73,10 +77,14 @@ const Sidebar = ({ children }) => {
     };
   }, []);
 
+  useEffect(() => {
+    setLogoutButtonPosition(showDropdown ? 'relative mt-8' : '');
+  }, [showDropdown]);
+
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
       <div className='flex-grow flex flex-col sm:flex-row'>
-        <div className='w-full sm:w-64 bg-white dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
+        <div className='w-full sm:w-48 bg-white dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
           <div className='p-4'>
             <div className='flex items-center justify-center mb-8'>
               <div className='bg-purple-800 text-white p-3 rounded-full'>
@@ -90,55 +98,55 @@ const Sidebar = ({ children }) => {
                   <span className='ml-2'>Home</span>
                 </div>
               </AuthenticatedLink>
-              <AuthenticatedLink href='/BillingForm'>
-                <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                  <RiBillLine size={20} />
-                  <span className='ml-2'>Bill Input</span>
-                </div>
-              </AuthenticatedLink>
 
-              <div className='relative' ref={dropdownRef}>
-                <AuthenticatedLink href='/OnboardForm'>
+
+              {isAuthenticated() && (
+                <div className='relative' ref={dropdownRef}>
                   <button
                     onClick={toggleDropdown}
                     className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
                   >
                     <div className='flex items-center'>
-                      <FaWpforms size={20} />
-                      <span className='ml-2'>Site Administration</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fillRule="evenodd" d="M10 16a1 1 0 0 1-.707-1.707l4-4a1 1 0 0 1 1.414 1.414l-4 4A.997.997 0 0 1 10 16z" clipRule="evenodd" />
-                        <path fillRule="evenodd" d="M10 4a1 1 0 0 1 .707 1.707l-4 4a1 1 0 0 1-1.414-1.414l4-4A.997.997 0 0 1 10 4z" clipRule="evenodd" />
-                      </svg>
+                      {/* <FaWpforms size={20} /> */}
+                      <span className='ml-2'>Dropdown </span>
+                      <IoIosArrowDropdown size={20} className='ml-2' />
+
                     </div>
                   </button>
-                </AuthenticatedLink>
-                {showDropdown && (
-                  <div className='absolute left-0 top-full w-full mt-2 py-2 bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
-                    <AuthenticatedLink href='/OnboardForm'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                        <FaWpforms size={20} />
-                        <span className='ml-2'>Site Onboarding</span>
-                      </div>
-                    </AuthenticatedLink>
-                    <AuthenticatedLink href='/bu'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                        <FaWpforms size={20} />
-                        <span className='ml-2'>Onboarded List</span>
-                      </div>
-                    </AuthenticatedLink>
-                  </div>
-                )}
-              </div>
+                  {showDropdown && (
+                    <div className='absolute left-0 top-full w-full mt-2 py-2 bg-white dark:bg-dark dark:text-white rounded-lg shadow-md'>
+                      <AuthenticatedLink href='/OnboardForm'>
+                        <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                          <FaWpforms size={20} />
+                          <span className='ml-2'>Site Onboarding</span>
+                        </div>
+                      </AuthenticatedLink>
+                      <AuthenticatedLink href='/BillingForm'>
+                        <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                          <RiBillLine size={20} />
+                          <span className='ml-2'>Bill Input</span>
+                        </div>
+                      </AuthenticatedLink>
+                      <AuthenticatedLink href='/bu'>
+                        <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
+                          <FaWpforms size={20} />
+                          <span className='ml-2'>Onboarded List</span>
+                        </div>
+                      </AuthenticatedLink>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
-          <div className='mt-auto p-4'>
-            {isAuthenticated() ? (
+          <div className={`p-4 $ {logoutButtonPosition}`}>
+            {isAuthenticated() && (
               <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg' onClick={logoutHandler}>
                 <AiOutlineLogin size={20} />
                 <span className='ml-2'>Logout</span>
               </div>
-            ) : (
+            )}
+            {!isAuthenticated() && (
               <Link href='/login'>
                 <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
                   <RiLoginBoxFill size={20} />
@@ -150,7 +158,7 @@ const Sidebar = ({ children }) => {
         </div>
         <main className='flex-1'>{children}</main>
       </div>
-    </div>
+    </div >
   );
 };
 
