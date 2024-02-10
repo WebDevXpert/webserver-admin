@@ -35,8 +35,8 @@ const TopCards = () => {
                     <p className='font-bold dark:bg-light-gray dark:text-white'><span className='text-2xl'>38,486</span> <span className='text-md'>lbs</span></p>
                     <p className='text-gray-600 dark:bg-light-gray dark:text-white mt-1'>Monthly Carbon</p>
                 </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-light-gray dark:text-white'>
-                    <span className='text-green-700 text-lg dark:bg-light-gray dark:text-white'>+18%</span>
+                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-kpicolors dark:text-white'>
+                    <span className='text-green-700 text-lg dark:bg-kpicolors dark:text-white'>+18%</span>
                 </p>
             </div>
 
@@ -46,8 +46,8 @@ const TopCards = () => {
                     <p className='font-bold dark:bg-light-gray dark:text-white'><span className='text-2xl'>3,57,213.376</span> <span className='text-md'>lbs</span></p>
                     <p className='text-gray-600 dark:bg-light-gray dark:text-white mt-2'>YTD Carbon</p>
                 </div>
-                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-light-gray dark:text-white'>
-                    <span className='text-green-700 text-lg dark:bg-light-gray dark:text-white'>+11%</span>
+                <p className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-kpicolors dark:text-white'>
+                    <span className='text-green-700 text-lg dark:bg-kpicolors dark:text-white'>+11%</span>
                 </p>
             </div>
 
@@ -57,7 +57,7 @@ const TopCards = () => {
                     Total BU Numbers: <span className='text-2xl'>{buNumbersCount}</span>
                 </p>
                 <select
-                    className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-light-gray dark:text-white'
+                    className='bg-green-200 flex justify-center items-center p-2 rounded-lg dark:bg-kpicolors dark:text-white'
                     value={selectedBuNumber}
                     onChange={handleBuNumberChange}
                 >

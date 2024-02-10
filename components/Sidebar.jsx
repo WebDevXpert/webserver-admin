@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
-import { RxSketchLogo, RxDashboard } from 'react-icons/rx';
 import { RiLoginBoxFill } from "react-icons/ri";
 import { AiOutlineLogin } from "react-icons/ai";
 import { FaWpforms } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
+import CarbonopsLogo from './CarbonopsLogo';
 
 const Sidebar = ({ children }) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -76,26 +76,15 @@ const Sidebar = ({ children }) => {
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
       <div className='flex-grow flex flex-col sm:flex-row'>
-        <div className='w-full flex flex-col sm:w-64 bg-white dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
+        <div className='sm:w-48 m-0 p-0 bg-medium-gray dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
           <div className='p-4'>
-            <div className={`flex ${!isAuthenticated() && "justify-center"} items-center mb-8`}>
-              <div className='bg-purple-800 text-white p-3 rounded-full'>
-                <RxSketchLogo size={35} />
-              </div>
+            <div className='flex items-center justify-center p-3 rounded-full'>
+              <CarbonopsLogo />
             </div>
-            {
-              !isAuthenticated() &&
-              <Link href='/login'>
-                <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                  <RiLoginBoxFill size={20} />
-                  <span className='ml-2'>Login</span>
-                </div>
-              </Link>
-            }
-            <div>
+            <div className='space-y-4'>
               <AuthenticatedLink href='/'>
                 <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-                  <RxDashboard size={20} />
+                  <RiBillLine size={20} />
                   <span className='ml-2'>Home</span>
                 </div>
               </AuthenticatedLink>
@@ -139,7 +128,7 @@ const Sidebar = ({ children }) => {
             </div>
           </div>
           <div className='mt-auto p-4'>
-            {/* {isAuthenticated() ? (
+            {isAuthenticated() ? (
               <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg' onClick={logoutHandler}>
                 <AiOutlineLogin size={20} />
                 <span className='ml-2'>Logout</span>
@@ -151,23 +140,7 @@ const Sidebar = ({ children }) => {
                   <span className='ml-2'>Login</span>
                 </div>
               </Link>
-            )} */}
-            {isAuthenticated() && (
-              <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg' onClick={logoutHandler}>
-                <AiOutlineLogin size={20} />
-                <span className='ml-2'>Logout</span>
-              </div>
-            )
-
-              // (
-              //   <Link href='/login'>
-              //     <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'>
-              //       <RiLoginBoxFill size={20} />
-              //       <span className='ml-2'>Login</span>
-              //     </div>
-              //   </Link>
-              // )
-            }
+            )}
           </div>
         </div>
         <main className='flex-1'>{children}</main>
