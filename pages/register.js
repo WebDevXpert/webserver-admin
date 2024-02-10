@@ -110,7 +110,8 @@ export default function Register() {
                                     type='text'
                                     name='name'
                                     placeholder='Name'
-                                    className={styles.input_text}
+                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+
                                     {...formik.getFieldProps('name')}
                                 />
                                 <span className='icon flex items-center px-4'>
@@ -125,9 +126,10 @@ export default function Register() {
                             <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
                                 <input
                                     type='email'
-                                    name='email'
+                                    name='emailjj'
                                     placeholder='Email'
-                                    className={styles.input_text}
+                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+
                                     {...formik.getFieldProps('email')}
                                 />
                                 <span className='icon flex items-center px-4'>
@@ -144,7 +146,8 @@ export default function Register() {
                                     type={`${show.password ? 'text' : 'password'}`}
                                     name='password'
                                     placeholder='Password'
-                                    className={styles.input_text}
+                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+
                                     {...formik.getFieldProps('password')}
                                 />
                                 <span className='icon flex items-center px-4' onClick={() => setShow({ ...show, password: !show.password })}>
@@ -161,7 +164,8 @@ export default function Register() {
                                     type={`${show.cpassword ? 'text' : 'password'}`}
                                     name='cpassword'
                                     placeholder='Confirm Password'
-                                    className={styles.input_text}
+                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+
                                     {...formik.getFieldProps('cpassword')}
                                 />
                                 <span className='icon flex items-center px-4' onClick={() => setShow({ ...show, cpassword: !show.cpassword })}>
@@ -181,7 +185,7 @@ export default function Register() {
                             </div>
                         </form>
 
-                        <p className='text-left text-gray-400 '>
+                        <p className='text-center text-gray-400 '>
                             Have an account? <Link href='/login' className='text-blue-700'>
                                 Sign In
                             </Link>

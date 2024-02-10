@@ -92,12 +92,12 @@ export default function Login() {
                     </div>
                     <section className='w-3/3 mx-auto flex flex-col gap-10'>
                         <form className='dark:bg-dark dark:text-white flex flex-col gap-5' onSubmit={formik.handleSubmit}>
-                            <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
+                            <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600 ' : ''}`}>
                                 <input
                                     type='email'
                                     name='email'
                                     placeholder='Email'
-                                    className={styles.input_text}
+                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
                                     {...formik.getFieldProps('email')}
                                 />
                                 <span className='icon flex items-center px-4'>
@@ -115,7 +115,8 @@ export default function Login() {
                                     type={`${show ? 'text' : 'password'}`}
                                     name='password'
                                     placeholder='password'
-                                    className={styles.input_text}
+                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+
                                     {...formik.getFieldProps('password')}
                                 />
                                 <span className='icon flex items-center px-4' onClick={() => setShow(!show)}>
