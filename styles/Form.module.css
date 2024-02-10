@@ -7,20 +7,18 @@
 }
 
 /* Styling for text input */
-.input_text {
+/* .input_text {
     width: 100%;
     padding: 1rem;
     border: 1px solid #3498db;
     border-radius: 0.5rem;
+    background-color: #d0d1e6;
     background-color: #0d2931;
     outline: none;
     transition: border-color 0.3s ease, color 0.3s ease;
-}
+} */
 
-.input_text:focus {
-    border: 1px solid #8e44ad;
-    color: #d0d1e6;
-}
+
 
 /* Styling for primary button */
 .button {
