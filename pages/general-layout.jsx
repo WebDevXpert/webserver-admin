@@ -24,7 +24,7 @@ const GeneralLayout = ({ children }) => {
 
     return (
         <>
-            <Header />
+            {/* <Header /> */}
             <main>{children}</main>
         </>
     );
