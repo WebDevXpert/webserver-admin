@@ -97,12 +97,12 @@ const Sidebar = ({ children }) => {
                 </div>
               </AuthenticatedLink>
 
-              <div className='relative' ref={dropdownRef}>
+              <div className='relative mt-0' style={{ marginTop: "0!important" }} ref={dropdownRef}>
                 {
                   isAuthenticated() &&
                   <button
                     onClick={toggleDropdown}
-                    className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
+                    className='text-left flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
                   >
                     <div className='flex items-center'>
                       <FaWpforms size={20} />
@@ -113,13 +113,13 @@ const Sidebar = ({ children }) => {
                 {showDropdown && (
                   <div className='absolute bg-white text-black top-full w-full mt-2 rounded-lg shadow-md'>
                     <AuthenticatedLink href='/OnboardForm'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 hover:text-white dark:hover:bg-gray-700 p-3'>
+                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-3'>
                         <FaWpforms size={20} />
                         <span className='ml-2'>Site Onboarding</span>
                       </div>
                     </AuthenticatedLink>
                     <AuthenticatedLink href='/bu'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 hover:text-white dark:hover:bg-gray-700 p-3'>
+                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-3'>
                         <FaWpforms size={20} />
                         <span className='ml-2'>Onboarded List</span>
                       </div>
