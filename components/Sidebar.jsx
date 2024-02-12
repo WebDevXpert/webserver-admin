@@ -78,7 +78,7 @@ const Sidebar = ({ children }) => {
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
       <div className='flex-grow flex flex-col sm:flex-row'>
-        <div className='sm:w-48 m-0 p-0 bg-medium-gray dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
+        <div className={`sm:w-48 m-0 p-0 bg-medium-gray ${darkMode ? "bg-light-gray text-white" : "bg-sky-50 text-black"}  overflow-y-auto`}>
           <div className='p-4'>
             <div className='flex items-center justify-center p-3 rounded-full'>
               <CarbonopsLogo darkMode={darkMode} />
