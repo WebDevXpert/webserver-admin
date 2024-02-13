@@ -7,15 +7,15 @@ export default async function handler(request, response) {
             await connectMongo();
 
             // Validate BU Number
-            const buNumberRegex = /^BU\d{2,3}[A-Z]?$/;
+            const buNumberRegex = /^BU\d{4}[A-Z]?$/;
             if (!buNumberRegex.test(request.body.buNumber.toUpperCase())) {
                 return response.status(400).json({ error: 'Invalid BU Number format' });
             }
 
             // Validate Account Number
-            const accountNumberRegex = /^[\d-]+$|^[A-Za-z0-9\-]+$/;
+            const accountNumberRegex = /^[A-Za-z0-9\-]{11}$/;
             if (!accountNumberRegex.test(request.body.accountNumber)) {
-                return response.status(400).json({ error: 'Account Number should only contain digits and hyphens' });
+                return response.status(400).json({ error: 'Account Number should contain exactly 11 characters including alphabets, digits, and hyphens' });
             }
 
             // Save form data
