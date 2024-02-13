@@ -66,9 +66,9 @@ const OnboardForm = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
-                            pattern="^BU\d{2,3}[A-Z]?$"
+                            pattern="^BU\d{4}[A-Z]?$"
                             placeholder='BU65D or BU65DS'
-                            title="Please enter a valid BU number in the format BU + 2 or 3 digits + 1 uppercase letter"
+                            title="Please enter a valid BU number in the format BU + 4 digits + 1 optional uppercase letter"
                         />
                     </div>
                     <div className="mb-4 dark:bg-light-gray dark:text-white">
@@ -101,7 +101,7 @@ const OnboardForm = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
-                            pattern="^[\w\-]+$"
+                            pattern="^[\w\-]+(?:-[\w]+)?$"
                             placeholder='123-A or ABC-123'
                             title="Account Number should contain alphabets, digits, and hyphens"
                         />
