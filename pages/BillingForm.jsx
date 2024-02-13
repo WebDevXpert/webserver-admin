@@ -81,7 +81,7 @@ const BillingForm = () => {
 
     return (
         <div className="min-h-screen">
-            <div className="max-w-md mx-auto mt-10 p-5 bg-white rounded-md shadow-md dark:bg-light-gray dark:text-white">
+            <div className="max-w-md mx-auto mt-10 p-5 bg-sky-50 rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-8 dark:bg-light-gray dark:text-white">Billing Form</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
