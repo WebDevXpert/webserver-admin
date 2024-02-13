@@ -8,6 +8,7 @@ import { FaWpforms } from "react-icons/fa";
 import { RiBillLine } from "react-icons/ri";
 import { toast } from 'react-toastify';
 import CarbonopsLogo from './CarbonopsLogo';
+import { useDarkMode } from '@/context/DarkmodeContext';
 
 const Sidebar = ({ children }) => {
   const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
@@ -15,6 +16,7 @@ const Sidebar = ({ children }) => {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
+  const { darkMode } = useDarkMode()
 
   const toggleDropdown = () => {
     setShowDropdown(prev => !prev);
@@ -76,10 +78,10 @@ const Sidebar = ({ children }) => {
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
       <div className='flex-grow flex flex-col sm:flex-row'>
-        <div className='sm:w-48 m-0 p-0 bg-medium-gray dark:bg-dark dark:text-white border-r border-gray-200 dark:border-gray-600 overflow-y-auto'>
+        <div className={`sm:w-48 m-0 p-0 ${darkMode ? "bg-light-gray text-sky-50" : "bg-sky-50 text-light-gray"}  overflow-y-auto`}>
           <div className='p-4'>
             <div className='flex items-center justify-center p-3 rounded-full'>
-              <CarbonopsLogo />
+              <CarbonopsLogo darkMode={darkMode} />
             </div>
             <div className='space-y-4'>
               <AuthenticatedLink href='/'>
@@ -95,12 +97,12 @@ const Sidebar = ({ children }) => {
                 </div>
               </AuthenticatedLink>
 
-              <div className='relative' ref={dropdownRef}>
+              <div className='relative mt-0' style={{ marginTop: "0!important" }} ref={dropdownRef}>
                 {
                   isAuthenticated() &&
                   <button
                     onClick={toggleDropdown}
-                    className='flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
+                    className='text-left flex items-center justify-between w-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-800 p-3 rounded-lg'
                   >
                     <div className='flex items-center'>
                       <FaWpforms size={20} />
@@ -111,13 +113,13 @@ const Sidebar = ({ children }) => {
                 {showDropdown && (
                   <div className='absolute bg-white text-black top-full w-full mt-2 rounded-lg shadow-md'>
                     <AuthenticatedLink href='/OnboardForm'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 hover:text-white dark:hover:bg-gray-700 p-3'>
+                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-3'>
                         <FaWpforms size={20} />
                         <span className='ml-2'>Site Onboarding</span>
                       </div>
                     </AuthenticatedLink>
                     <AuthenticatedLink href='/bu'>
-                      <div className='flex items-center cursor-pointer hover:bg-gray-200 hover:text-white dark:hover:bg-gray-700 p-3'>
+                      <div className='flex items-center cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700 p-3'>
                         <FaWpforms size={20} />
                         <span className='ml-2'>Onboarded List</span>
                       </div>

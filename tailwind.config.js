@@ -9,15 +9,15 @@ module.exports = {
     extend: {
       colors: {
         "dark": '#2C3535',
-        "card": '#1e293b',
+        // "card": '#1e293b',
         "medium": '#323846',
         "kpicolors": '#475569',
         "light-gray": '#404349',
         "gray": '#dbeafe',
         "medium-gray": '#eff6ff',
-        "Hold": '#E8AD0F',
-        "Completed": '#289124',
-        "Processing": '#249173',
+        // "Hold": '#E8AD0F',
+        // "Completed": '#289124',
+        // "Processing": '#249173',
       }
     },
   },
