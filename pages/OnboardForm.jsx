@@ -68,7 +68,7 @@ const OnboardForm = () => {
                             required
                             pattern="^BU\d{4}[A-Z]?$"
                             placeholder='BU65D or BU65DS'
-                            title="Please enter a valid BU number in the format BU + 4 digits + 1 optional uppercase letter"
+                            title="Please enter a valid BU number in the format BU + 4 digits + 1 optional uppercase/lowercase letter"
                         />
                     </div>
                     <div className="mb-4 dark:bg-light-gray dark:text-white">
