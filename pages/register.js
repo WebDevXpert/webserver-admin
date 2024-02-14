@@ -6,7 +6,7 @@ import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { registerValidate } from '../lib/validate'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { getSession, useSession } from 'next-auth/react';
 import { toast } from 'react-toastify';
 

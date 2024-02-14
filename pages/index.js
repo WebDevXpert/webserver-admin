@@ -2,7 +2,7 @@ import { getSession, useSession, signOut } from 'next-auth/react';
 import { useEffect } from 'react';
 import TopCards from '../components/TopCards';
 import BarChart from '../components/BarChart';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import Head from 'next/head';
 
 export default function Home() {

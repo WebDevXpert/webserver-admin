@@ -1,7 +1,7 @@
 import { useSession, getSession } from 'next-auth/react';
 import Header from '@/components/Header';
 import React, { useEffect } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const GeneralLayout = ({ children }) => {
     const { data: session, status } = useSession();
