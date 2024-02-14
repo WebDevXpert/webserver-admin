@@ -51,7 +51,7 @@ const OnboardForm = () => {
 
     return (
         <div className="min-h-screen flex items-center">
-            <div className="max-w-md mx-auto p-8 bg-indigo-500 rounded-md shadow-md dark:bg-light-gray dark:text-white">
+            <div className="max-w-md mx-auto p-8 bg-sky-50 rounded-md shadow-md dark:bg-light-gray dark:text-white">
                 <h2 className="text-2xl font-semibold mb-4 dark:bg-light-gray dark:text-white">Site Onboard Form</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
@@ -122,6 +122,30 @@ const OnboardForm = () => {
                             >
                                 <option value="AKGD">AKGD</option>
                                 <option value="AKMS">AKMS</option>
+                                <option value="AKGD">AZNM</option>
+                                <option value="AKMS">CAMX</option>
+                                <option value="AKGD">ERCT</option>
+                                <option value="AKMS">FRCC</option>
+                                <option value="AKGD">HIMS</option>
+                                <option value="AKMS">HIOA</option>
+                                <option value="AKGD">MROE</option>
+                                <option value="AKMS">MROW</option>
+                                <option value="AKGD">NEWE</option>
+                                <option value="AKMS">NWPP</option>
+                                <option value="AKGD">NYCW</option>
+                                <option value="AKMS">NYLI</option>
+                                <option value="AKGD">NYUP</option>
+                                <option value="AKMS">PRMS</option>
+                                <option value="AKGD">RFCE</option>
+                                <option value="AKMS">RFCM</option>
+                                <option value="AKGD">RFCW</option>
+                                <option value="AKMS">RMPA</option>
+                                <option value="AKGD">SPNO</option>
+                                <option value="AKMS">SPSO</option>
+                                <option value="AKGD">SRMV</option>
+                                <option value="AKMS">SRMW</option>
+                                <option value="AKGD">SRSO</option>
+                                <option value="AKMS">SRTV</option>
                             </select>
                         </div>
                     )}
