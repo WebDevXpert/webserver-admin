@@ -84,7 +84,7 @@ const OnboardForm = () => {
                             required
                         >
                             <option value="Electric">Electric</option>
-                            <option value="Natural Gas">Natural Gas</option>
+                            <option value="Natural Gas">Natural_Gas</option>
                             <option value="Propane">Propane</option>
                         </select>
                     </div>
@@ -104,6 +104,7 @@ const OnboardForm = () => {
                             pattern="^[\w\-]+(?:-[\w]+)?$"
                             placeholder='123-A or ABC-123'
                             title="Account Number should contain alphabets, digits, and hyphens"
+                            maxLength={11}
                         />
                     </div>
 

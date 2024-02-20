@@ -7,7 +7,7 @@ import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { registerValidate } from '../../lib/validate'
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 export default function Register() {
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';

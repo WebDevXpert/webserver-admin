@@ -5,7 +5,7 @@ import Layout from '../layout/layout';
 import styles from '../styles/Form.module.css';
 import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import login_validate from '../lib/validate';
 import { getSession, signIn, useSession } from "next-auth/react"
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';

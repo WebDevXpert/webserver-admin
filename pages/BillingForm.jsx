@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 const BillingForm = () => {
-    const accountNumbers = ["42424242424242", "43434343434343"];
-    const engineeringUnits = {
-        electric: ["kWh", "MWh"],
-        gas: ["Therms", "SCF"],
-    };
-
+    const [accountNumbers, setAccountNumbers] = useState([]);
+    const [billingTypes, setBillingTypes] = useState([]);
     const [formData, setFormData] = useState({
         accountNumber: '',
         billType: 'electric',
@@ -15,19 +11,66 @@ const BillingForm = () => {
         serviceEndDate: '',
         billAmount: '',
         usageAmount: '',
-        engineeringUnit: engineeringUnits['electric'][0],
+        engineeringUnit: 'kWh',
     });
+
+    const engineeringUnits = {
+        Electric: ["kWh", "MWh"],
+        Natural_Gas: ["Therms", "SCF"],
+        Propane: ["Gallons", "Pounds"],
+    };
+
+    useEffect(() => {
+        const fetchAccountNumbers = async () => {
+            try {
+                const response = await fetch('/api/getAccount');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch account numbers');
+                }
+                const data = await response.json();
+                console.log("Fetched account numbers:", data);
+                setAccountNumbers(data);
+            } catch (error) {
+                console.error('Error fetching account numbers:', error);
+                toast.error('Failed to fetch account numbers');
+            }
+        };
+
+        const fetchBillingTypes = async () => {
+            try {
+                const response = await fetch(`/api/getBillType`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch billing types');
+                }
+                const data = await response.json();
+                console.log('Fetched billing types:', data);
+                setBillingTypes(data);
+            } catch (error) {
+                console.error('Error fetching billing types:', error);
+                toast.error('Failed to fetch billing types');
+            }
+        };
+
+        fetchAccountNumbers();
+        fetchBillingTypes();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         if (name === 'billType') {
+            console.log("Selected bill type:", value);
+            const selectedBillType = value.charAt(0).toUpperCase() + value.slice(1);
+            console.log("Engineering units:", engineeringUnits[selectedBillType]);
+            const defaultEngineeringUnit = engineeringUnits[selectedBillType]?.[0] || '';
+
             setFormData({
                 ...formData,
                 [name]: value,
-                engineeringUnit: engineeringUnits[value][0],
+                engineeringUnit: defaultEngineeringUnit,
             });
         } else {
+            console.log("Updated form data:", { ...formData, [name]: value });
             setFormData({
                 ...formData,
                 [name]: value,
@@ -64,10 +107,11 @@ const BillingForm = () => {
             toast.success("Billing form created")
         } catch (error) {
             console.error('Error:', error);
-            toast.error(error)
+            toast.error(error.message || 'Failed to submit form');
         }
 
         // Reset the form after successful submission
+        console.log("Resetting form data");
         setFormData({
             accountNumber: '',
             billType: 'electric',
@@ -92,11 +136,12 @@ const BillingForm = () => {
                             id="accountNumber"
                             name="accountNumber"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            defaultValue=""
+                            onChange={handleChange}
+                            value={formData.accountNumber}
                         >
                             <option value="" disabled>Select Account Number</option>
-                            {accountNumbers.map((number) => (
-                                <option key={number} value={number}>{number}</option>
+                            {accountNumbers.map((account) => (
+                                <option key={account._id} value={account.accountNumber}>{account.accountNumber}</option>
                             ))}
                         </select>
                     </div>
@@ -109,11 +154,13 @@ const BillingForm = () => {
                             id="billType"
                             name="billType"
                             className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            value={formData.billType}
                             onChange={handleChange}
+                            value={formData.billType}
                         >
-                            <option value="electric">Electric</option>
-                            <option value="gas">Gas</option>
+                            <option value="" disabled>Select Billing Types</option>
+                            {billingTypes.map((type) => (
+                                <option key={type} value={type}>{type}</option>
+                            ))}
                         </select>
                     </div>
 
@@ -186,7 +233,7 @@ const BillingForm = () => {
                             value={formData.engineeringUnit}
                             onChange={handleChange}
                         >
-                            {engineeringUnits[formData.billType].map((unit) => (
+                            {(engineeringUnits[formData.billType] || []).map((unit) => (
                                 <option key={unit} value={unit}>{unit}</option>
                             ))}
                         </select>

@@ -1,9 +1,9 @@
 import { useSession, getSession } from 'next-auth/react';
-import Header from '@/components/Header';
-import React, { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const GeneralLayout = ({ children }) => {
+    const [showPopup, setShowPopup] = useState(false);
     const { data: session, status } = useSession();
     const router = useRouter();
 
@@ -17,8 +17,13 @@ const GeneralLayout = ({ children }) => {
     useEffect(() => {
 
         checkAuth();
-    // }, [session, router]);
+        // }, [session, router]);
     }, []);
+
+    const handleLogout = async () => {
+        await fetch('/api/auth/logout');
+        await router.replace('/login');
+    };
 
     if (status === 'loading') {
         return <p>Loading...</p>;
@@ -26,7 +31,12 @@ const GeneralLayout = ({ children }) => {
 
     return (
         <>
-            {/* <Header /> */}
+            {showPopup && (
+                <div className="popup">
+                    <p>Please login again to renew your session.</p>
+                    <button onClick={handleLogout}>Logout</button>
+                </div>
+            )}
             <main>{children}</main>
         </>
     );

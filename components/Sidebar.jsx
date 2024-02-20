@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useSession, signOut } from 'next-auth/react';
 import { RiLoginBoxFill } from "react-icons/ri";
 import { AiOutlineLogin } from "react-icons/ai";
@@ -49,17 +49,17 @@ const Sidebar = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    const handleRouteChange = () => {
-      closeDropdown();
-    };
+  // useEffect(() => {
+  //   const handleRouteChange = () => {
+  //     closeDropdown();
+  //   };
 
-    router.events.on('routeChangeStart', handleRouteChange);
+  //   router.events.on('routeChangeStart', handleRouteChange);
 
-    return () => {
-      router.events.off('routeChangeStart', handleRouteChange);
-    };
-  }, []);
+  //   return () => {
+  //     router.events.off('routeChangeStart', handleRouteChange);
+  //   };
+  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
