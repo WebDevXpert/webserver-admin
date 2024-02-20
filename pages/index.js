@@ -16,9 +16,8 @@ export default function Home() {
         }
 
         if (!session) {
-            router.push(apiUrl || process.env.NEXT_PUBLIC_PRODUCTION_URL);
-            console.log("apiUrl", apiUrl)
-            router.push('/');
+            router.push("/login");
+            console.log("apiUrl index page", apiUrl)
         }
     }, [session, status, router]);
 

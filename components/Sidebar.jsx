@@ -30,8 +30,8 @@ const Sidebar = ({ children }) => {
     try {
       await signOut({ redirect: false });
       router.push('/login');
+      // router.push(apiUrl);
       toast.success("User logged out");
-      router.push(apiUrl);
     } catch (error) {
       console.error("Error during logout:", error);
     }

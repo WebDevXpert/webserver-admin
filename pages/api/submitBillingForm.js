@@ -8,12 +8,20 @@ export default async function handler(req, res) {
             await connectMongo();
 
             // Create a new instance of the BillingFormModel with data from the request body
-            const formData = new BillingFormModel(req.body);
+            const formData = new BillingFormModel({
+                accountNumber: req.body.accountNumber,
+                billType: req.body.billType,
+                serviceStartDate: req.body.serviceStartDate,
+                serviceEndDate: req.body.serviceEndDate,
+                billAmount: req.body.billAmount,
+                usageAmount: req.body.usageAmount,
+                engineeringUnit: req.body.engineeringUnit,
+            });
 
             // Save the data to MongoDB
             await formData.save();
 
-            return res.status(201).json({ message: 'Form submitted successfully' });
+            res.status(201).json({ message: 'Form submitted successfully' });
         } catch (error) {
             console.error('Error submitting form:', error);
             return res.status(500).json({ message: 'Internal Server Error' });

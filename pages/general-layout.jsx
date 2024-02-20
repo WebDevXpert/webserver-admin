@@ -7,41 +7,18 @@ const GeneralLayout = ({ children }) => {
     const { data: session, status } = useSession();
     const router = useRouter();
 
+    const checkAuth = async () => {
+        const userSession = await getSession();
+        // if (!userSession && !['/login', '/register'].includes(router.pathname)) {
+        if (!userSession) {
+            router.push('/login');
+        }
+    };
     useEffect(() => {
-        const checkAuth = async () => {
-            const userSession = await getSession();
-            // if (!userSession && !['/login', '/register'].includes(router.pathname)) {
-            if (!userSession) {
-                router.replace('/login');
-            } else if (userSession) {
-                const expiresAt = new Date(userSession.expires * 1000);
-                const now = new Date();
-                const timeUntilExpiration = expiresAt - now;
-
-                // Show popup 2 minutes before session expiration
-                if (timeUntilExpiration > 0 && timeUntilExpiration <= 2 * 60 * 1000) {
-                    setShowPopup(true);
-                }
-
-                // Expire session after 5 minutes
-                if (timeUntilExpiration <= 0) {
-                    await router.replace('/login');
-                }
-
-                // // Show popup 5 minutes before session expiration
-                // if (timeUntilExpiration > 0 && timeUntilExpiration <= 5 * 60 * 1000) {
-                //     setShowPopup(true);
-                // }
-
-                // // Expire session after 9 hours
-                // if (timeUntilExpiration <= 0) {
-                //     await router.replace('/login');
-                // }
-            }
-        };
 
         checkAuth();
-    }, [session, router]);
+        // }, [session, router]);
+    }, []);
 
     const handleLogout = async () => {
         await fetch('/api/auth/logout');

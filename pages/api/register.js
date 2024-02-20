@@ -35,7 +35,7 @@ export default function Register() {
         await fetch(`${apiUrl}/api/auth/signup`, options)
             .then(res => res.json())
             .then((data) => {
-                if (data) router.push(`${apiUrl}`)
+                if (data) router.push("/")
             })
     }
 

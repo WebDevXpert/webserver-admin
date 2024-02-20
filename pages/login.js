@@ -26,7 +26,7 @@ export default function Login() {
                 }, 1000);
                 setTimeout(() => {
                     router.push('/');
-                    router.push(apiUrl);
+                    // router.push(apiUrl);
                     setShowMessage(false)
                 }, 1000);
             }
@@ -52,7 +52,7 @@ export default function Login() {
             });
 
             if (status.ok) {
-                router.push(apiUrl);
+                router.push("/");
                 toast.success("User logged in")
             } else {
                 console.log("status.error", status.error)

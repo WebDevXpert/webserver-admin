@@ -68,7 +68,7 @@ export default function Register() {
                 const data = await response.json();
 
                 if (response.ok) {
-                    router.push(`${apiUrl}`);
+                    router.push("/");
                     toast.success("User registered successfully");
                 } else {
                     if (data.message) {
