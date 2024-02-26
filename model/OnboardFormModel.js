@@ -9,9 +9,9 @@ const onboardFormSchema = new mongoose.Schema(
             required: true,
             validate: {
                 validator: function (value) {
-                    return /^[A-Za-z0-9\-]{11}$/.test(value);
+                    return /^[A-Za-z0-9\-]{11,30}$/.test(value);
                 },
-                message: 'Account Number should contain 11 characters including alphabets, digits, and hyphens',
+                message: 'Account Number should contain between 11 and 30 characters including alphabets, digits, and hyphens',
             },
         },
         grid: { type: String, required: true },
