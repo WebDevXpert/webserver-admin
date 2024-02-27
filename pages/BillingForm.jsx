@@ -119,7 +119,7 @@ const BillingForm = () => {
             serviceEndDate: '',
             billAmount: '',
             usageAmount: '',
-            engineeringUnit: engineeringUnits['electric'][0],
+            engineeringUnit: 'kWh',
         });
     };
 

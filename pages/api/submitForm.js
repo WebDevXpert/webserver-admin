@@ -13,9 +13,9 @@ export default async function handler(request, response) {
             }
 
             // Validate Account Number
-            const accountNumberRegex = /^[A-Za-z0-9\-]{11}$/;
+            const accountNumberRegex = /^[A-Za-z0-9\-]{11,30}$/;
             if (!accountNumberRegex.test(request.body.accountNumber)) {
-                return response.status(400).json({ error: 'Account Number should contain exactly 11 characters including alphabets, digits, and hyphens' });
+                return response.status(400).json({ error: 'Account Number should contain between 11 and 30 characters including alphabets, digits, and hyphens' });
             }
 
             // Save form data

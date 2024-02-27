@@ -101,10 +101,10 @@ const OnboardForm = () => {
                             onChange={handleChange}
                             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                             required
-                            pattern="^[\w\-]+(?:-[\w]+)?$"
-                            placeholder='123-A or ABC-123'
-                            title="Account Number should contain alphabets, digits, and hyphens"
-                            maxLength={11}
+                            pattern="^[A-Za-z0-9\-]{11,30}$"
+                            placeholder='ABC-1234567890'
+                            title="Account Number should contain between 11 and 30 characters including alphabets, digits, and hyphens"
+                            maxLength={30}
                         />
                     </div>
 

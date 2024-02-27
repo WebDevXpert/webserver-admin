@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const billingFormSchema = mongoose.Schema({
-    accountNumber: { type: Number, required: true },
+    accountNumber: { type: String, required: true },
     billType: { type: String, required: true },
     serviceStartDate: { type: Date, required: true },
     serviceEndDate: { type: Date, required: true },
