@@ -1,7 +1,9 @@
+import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 
 const OnboardForm = () => {
+    const router = useRouter()
     const initialState = {
         buNumber: '',
         billType: 'Electric',
@@ -36,7 +38,8 @@ const OnboardForm = () => {
             if (response.ok) {
                 console.log('Form submitted successfully');
                 toast.success('Onboard form created');
-                window.location.href = "/bu";
+                // window.location.href = "/bu";
+                router.push("/bu")
             } else {
                 console.error('Failed to submit form');
                 toast.error(responseData.error || 'Failed to submit form');
