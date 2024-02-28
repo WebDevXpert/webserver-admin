@@ -1,9 +1,28 @@
 import Head from 'next/head';
 import TopCards from '../components/TopCards';
 import BarChart from '../components/BarChart';
-
+import { useEffect, useState } from 'react';
+import Loader from '@/components/Loader';
 
 export default function Home() {
+    const [loading, setLoading] = useState(true);
+    console.log("home page loader", loading)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                await new Promise(resolve => setTimeout(resolve, 3000));
+
+                // Once data is fetched, set loading to false
+                setLoading(true);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <>
@@ -14,10 +33,18 @@ export default function Home() {
                 <link rel='icon' href='/favicon.ico' />
             </Head>
             <main className='bg-gray-100 min-h-screen dark:bg-dark dark:text-white'>
-                <TopCards />
-                <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
-                    <BarChart />
-                </div>
+                {loading ? (
+                    <div className='flex items-center justify-center h-screen'>
+                        <Loader />
+                    </div>
+                ) : (
+                    <>
+                        <TopCards />
+                        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
+                            <BarChart />
+                        </div>
+                    </>
+                )}
             </main>
         </>
     );
