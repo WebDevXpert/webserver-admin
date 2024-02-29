@@ -1,9 +1,15 @@
+import Loader from '@/components/Loader';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { useDarkMode } from '@/context/DarkmodeContext';
 
 const BillingForm = () => {
     const [accountNumbers, setAccountNumbers] = useState([]);
     const [billingTypes, setBillingTypes] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { darkMode } = useDarkMode();
+    console.log("darkMode Billing", darkMode);
+
     const [formData, setFormData] = useState({
         accountNumber: '',
         billType: 'electric',
@@ -51,17 +57,20 @@ const BillingForm = () => {
             }
         };
 
-        fetchAccountNumbers();
-        fetchBillingTypes();
+        const fetchData = async () => {
+            setLoading(true);
+            await Promise.all([fetchAccountNumbers(), fetchBillingTypes()]);
+            setLoading(false);
+        };
+
+        fetchData();
     }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
 
         if (name === 'billType') {
-            console.log("Selected bill type:", value);
             const selectedBillType = value.charAt(0).toUpperCase() + value.slice(1);
-            console.log("Engineering units:", engineeringUnits[selectedBillType]);
             const defaultEngineeringUnit = engineeringUnits[selectedBillType]?.[0] || '';
 
             setFormData({
@@ -70,7 +79,6 @@ const BillingForm = () => {
                 engineeringUnit: defaultEngineeringUnit,
             });
         } else {
-            console.log("Updated form data:", { ...formData, [name]: value });
             setFormData({
                 ...formData,
                 [name]: value,
@@ -104,14 +112,12 @@ const BillingForm = () => {
             }
 
             console.log('Form submitted successfully');
-            toast.success("Billing form created")
+            toast.success("Billing form created");
         } catch (error) {
             console.error('Error:', error);
             toast.error(error.message || 'Failed to submit form');
         }
 
-        // Reset the form after successful submission
-        console.log("Resetting form data");
         setFormData({
             accountNumber: '',
             billType: 'electric',
@@ -124,131 +130,139 @@ const BillingForm = () => {
     };
 
     return (
-        <div className="min-h-screen">
-            <div className="max-w-md mx-auto mt-10 p-5 bg-sky-50 rounded-md shadow-md dark:bg-light-gray dark:text-white">
-                <h2 className="text-2xl font-semibold mb-8 dark:bg-light-gray dark:text-white">Billing Form</h2>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-4">
-                        <label htmlFor="accountNumber" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Account Number
-                        </label>
-                        <select
-                            id="accountNumber"
-                            name="accountNumber"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            onChange={handleChange}
-                            value={formData.accountNumber}
-                        >
-                            <option value="" disabled>Select Account Number</option>
-                            {accountNumbers.map((account) => (
-                                <option key={account._id} value={account.accountNumber}>{account.accountNumber}</option>
-                            ))}
-                        </select>
-                    </div>
+        <div className="mt-8">
+            {loading ? (
+                <div className='flex items-center justify-center h-screen'>
+                    <Loader />
+                </div>
+            ) : (
+                <div className="min-h-screen">
+                    <div className="max-w-md mx-auto mt-10 p-5 bg-sky-50 rounded-md shadow-md dark:bg-light-gray dark:text-white">
+                        <h2 className="text-2xl font-semibold mb-8 dark:bg-light-gray dark:text-white">Billing Form</h2>
+                        <form onSubmit={handleSubmit}>
+                            <div className="mb-4">
+                                <label htmlFor="accountNumber" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Account Number
+                                </label>
+                                <select
+                                    id="accountNumber"
+                                    name="accountNumber"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    onChange={handleChange}
+                                    value={formData.accountNumber}
+                                >
+                                    <option value="" disabled>Select Account Number</option>
+                                    {accountNumbers.map((account) => (
+                                        <option key={account._id} value={account.accountNumber}>{account.accountNumber}</option>
+                                    ))}
+                                </select>
+                            </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="billType" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Bill Type
-                        </label>
-                        <select
-                            id="billType"
-                            name="billType"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            onChange={handleChange}
-                            value={formData.billType}
-                        >
-                            <option value="" disabled>Select Billing Types</option>
-                            {billingTypes.map((type) => (
-                                <option key={type} value={type}>{type}</option>
-                            ))}
-                        </select>
-                    </div>
+                            <div className="mb-4">
+                                <label htmlFor="billType" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Bill Type
+                                </label>
+                                <select
+                                    id="billType"
+                                    name="billType"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    onChange={handleChange}
+                                    value={formData.billType}
+                                >
+                                    <option value="" disabled>Select Billing Types</option>
+                                    {billingTypes.map((type) => (
+                                        <option key={type} value={type}>{type}</option>
+                                    ))}
+                                </select>
+                            </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="serviceStartDate" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Service Start Date
-                        </label>
-                        <input
-                            type="date"
-                            id="serviceStartDate"
-                            name="serviceStartDate"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            value={formData.serviceStartDate}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label htmlFor="serviceStartDate" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Service Start Date
+                                </label>
+                                <input
+                                    type="date"
+                                    id="serviceStartDate"
+                                    name="serviceStartDate"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    value={formData.serviceStartDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="serviceEndDate" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Service End Date
-                        </label>
-                        <input
-                            type="date"
-                            id="serviceEndDate"
-                            name="serviceEndDate"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            value={formData.serviceEndDate}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label htmlFor="serviceEndDate" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Service End Date
+                                </label>
+                                <input
+                                    type="date"
+                                    id="serviceEndDate"
+                                    name="serviceEndDate"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    value={formData.serviceEndDate}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="billAmount" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Bill Amount ($)
-                        </label>
-                        <input
-                            type="number"
-                            id="billAmount"
-                            name="billAmount"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            placeholder="Enter bill amount"
-                            value={formData.billAmount}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label htmlFor="billAmount" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Bill Amount ($)
+                                </label>
+                                <input
+                                    type="number"
+                                    id="billAmount"
+                                    name="billAmount"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    placeholder="Enter bill amount"
+                                    value={formData.billAmount}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="usageAmount" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Usage Amount
-                        </label>
-                        <input
-                            type="number"
-                            id="usageAmount"
-                            name="usageAmount"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            placeholder="Enter usage amount"
-                            value={formData.usageAmount}
-                            onChange={handleChange}
-                        />
-                    </div>
+                            <div className="mb-4">
+                                <label htmlFor="usageAmount" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Usage Amount
+                                </label>
+                                <input
+                                    type="number"
+                                    id="usageAmount"
+                                    name="usageAmount"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    placeholder="Enter usage amount"
+                                    value={formData.usageAmount}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                    <div className="mb-4">
-                        <label htmlFor="engineeringUnit" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
-                            Engineering Unit
-                        </label>
-                        <select
-                            id="engineeringUnit"
-                            name="engineeringUnit"
-                            className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
-                            value={formData.engineeringUnit}
-                            onChange={handleChange}
-                        >
-                            {(engineeringUnits[formData.billType] || []).map((unit) => (
-                                <option key={unit} value={unit}>{unit}</option>
-                            ))}
-                        </select>
-                    </div>
+                            <div className="mb-4">
+                                <label htmlFor="engineeringUnit" className="block text-gray-600 font-semibold mb-2 dark:bg-light-gray dark:text-white">
+                                    Engineering Unit
+                                </label>
+                                <select
+                                    id="engineeringUnit"
+                                    name="engineeringUnit"
+                                    className="w-full p-2 border rounded-md dark:bg-light-gray dark:text-white"
+                                    value={formData.engineeringUnit}
+                                    onChange={handleChange}
+                                >
+                                    {(engineeringUnits[formData.billType] || []).map((unit) => (
+                                        <option key={unit} value={unit}>{unit}</option>
+                                    ))}
+                                </select>
+                            </div>
 
-                    <div className="mt-6">
-                        <button
-                            type="submit"
-                            className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300"
-                        >
-                            Submit
-                        </button>
+                            <div className="mt-6">
+                                <button
+                                    type="submit"
+                                    className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition duration-300"
+                                >
+                                    Submit
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-            </div>
+                </div>
+            )}
         </div>
     );
 };

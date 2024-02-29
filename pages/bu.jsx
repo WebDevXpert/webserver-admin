@@ -1,3 +1,4 @@
+import Loader from '@/components/Loader';
 import { useDarkMode } from '@/context/DarkmodeContext';
 import React, { useState, useEffect } from 'react';
 
@@ -53,7 +54,9 @@ const Bu = () => {
     return (
         <div className="mt-8">
             {loading ? (
-                <p>Loading...</p>
+                <div className='flex items-center justify-center h-screen'>
+                    <Loader />
+                </div>
             ) : (
                 <div className="relative">
                     <div className="mb-4 flex justify-between">
