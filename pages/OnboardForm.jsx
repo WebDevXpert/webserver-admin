@@ -87,7 +87,7 @@ const OnboardForm = () => {
                             required
                         >
                             <option value="Electric">Electric</option>
-                            <option value="Natural Gas">Natural_Gas</option>
+                            <option value="Natural_Gas">Natural_Gas</option>
                             <option value="Propane">Propane</option>
                         </select>
                     </div>
