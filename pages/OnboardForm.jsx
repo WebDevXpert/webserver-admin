@@ -37,18 +37,14 @@ const OnboardForm = () => {
             });
 
             const responseData = await response.json();
-            console.log('Server Response:', responseData);
 
             if (response.ok) {
-                console.log('Form submitted successfully');
                 toast.success('Onboard form created');
                 router.push('/bu');
             } else {
-                console.error('Failed to submit form');
                 toast.error(responseData.error || 'Failed to submit form');
             }
         } catch (error) {
-            console.error('Error:', error);
             toast.error(error.message || 'An error occurred');
         } finally {
             setLoading(false);

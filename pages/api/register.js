@@ -66,7 +66,6 @@ export default function Register() {
                             <HiOutlineUser size={25} />
                         </span>
                     </div>
-                    {/* {formik.errors.name && formik.touched.name ? <span className='text-rose-500'>{formik.errors.name}</span> : <></>} */}
                     <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
                         <input
                             type="email"
@@ -79,7 +78,7 @@ export default function Register() {
                             <HiAtSymbol size={25} />
                         </span>
                     </div>
-                    {/* {formik.errors.email && formik.touched.email ? <span className='text-rose-500'>{formik.errors.email}</span> : <></>} */}
+
                     <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
                         <input
                             type={`${show.password ? "text" : "password"}`}
@@ -92,7 +91,6 @@ export default function Register() {
                             <HiFingerPrint size={25} />
                         </span>
                     </div>
-                    {/* {formik.errors.password && formik.touched.password ? <span className='text-rose-500'>{formik.errors.password}</span> : <></>} */}
 
                     <div className={`${styles.input_group} ${formik.errors.cpassword && formik.touched.cpassword ? 'border-rose-600' : ''}`}>
                         <input
@@ -106,9 +104,7 @@ export default function Register() {
                             <HiFingerPrint size={25} />
                         </span>
                     </div>
-                    {/* {formik.errors.cpassword && formik.touched.cpassword ? <span className='text-rose-500'>{formik.errors.cpassword}</span> : <></>} */}
 
-                    {/* login buttons */}
                     <div className="input-button">
                         <button type='submit' className={styles.button}>
                             Sign Up
@@ -116,7 +112,6 @@ export default function Register() {
                     </div>
                 </form>
 
-                {/* bottom */}
                 <p className='text-center text-gray-400 '>
                     Have an account? <Link href={'/login'}><a className='text-blue-700'>Sign In</a></Link>
                 </p>

@@ -7,7 +7,7 @@ export default async function handler(req, res) {
             // Connect to MongoDB
             await connectMongo();
 
-            // Create a new instance of the BillingFormModel with data from the request body
+
             const formData = new BillingFormModel({
                 accountNumber: req.body.accountNumber,
                 billType: req.body.billType,
@@ -18,12 +18,10 @@ export default async function handler(req, res) {
                 engineeringUnit: req.body.engineeringUnit,
             });
 
-            // Save the data to MongoDB
             await formData.save();
 
             res.status(201).json({ message: 'Form submitted successfully' });
         } catch (error) {
-            console.error('Error submitting form:', error);
             return res.status(500).json({ message: 'Internal Server Error' });
         }
     } else {

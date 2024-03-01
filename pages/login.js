@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import Link from 'next/link';
-// import Image from 'next/image';
 import Layout from '../layout/layout';
 import styles from '../styles/Form.module.css';
 import { useState, useEffect } from 'react';
@@ -26,7 +25,6 @@ export default function Login() {
                 }, 1000);
                 setTimeout(() => {
                     router.push('/');
-                    // router.push(apiUrl);
                     setShowMessage(false)
                 }, 1000);
             }
@@ -55,22 +53,10 @@ export default function Login() {
                 router.push("/");
                 toast.success("User logged in")
             } else {
-                console.log("status.error", status.error)
                 toast.error(status.error)
             }
         },
     });
-
-    // // Google Handler function
-    // async function handleGoogleSignin() {
-    //     signIn('google', { callbackUrl: "http://localhost:3000" })
-    // }
-
-    // // Github Login 
-    // async function handleGithubSignin() {
-    //     signIn('github', { callbackUrl: "http://localhost:3000" })
-    // }
-
     return (
         <Layout>
 
@@ -134,16 +120,6 @@ export default function Login() {
                                     Login
                                 </button>
                             </div>
-                            {/* <div className="input-button">
-                        <button type='button' onClick={handleGoogleSignin} className={styles.button_custom}>
-                            Sign In with Google <Image src={'/assets/google.svg'} width="20" height={20} ></Image>
-                        </button>
-                    </div>
-                    <div className="input-button">
-                        <button type='button' onClick={handleGithubSignin} className={styles.button_custom}>
-                            Sign In with Github <Image src={'/assets/github.svg'} width={25} height={25}></Image>
-                        </button>
-                    </div> */}
                         </form>
 
                         <p className='text-left text-gray-400 '>

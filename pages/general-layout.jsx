@@ -1,6 +1,7 @@
 import { useSession, getSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Loader from '@/components/Loader';
 
 const GeneralLayout = ({ children }) => {
     const { data: session, status } = useSession();
@@ -8,8 +9,7 @@ const GeneralLayout = ({ children }) => {
 
     const checkAuth = async () => {
         const userSession = await getSession();
-        // if (!userSession && !['/login', '/register'].includes(router.pathname)) {
-        if (!userSession) {
+        if (!userSession && !['/login', '/register'].includes(router.pathname)) {
             router.push('/login');
         }
     };
@@ -17,10 +17,6 @@ const GeneralLayout = ({ children }) => {
 
         checkAuth();
     }, [session, router]);
-
-    if (status === 'loading') {
-        return <p>Loading...</p>;
-    }
 
     return (
         <>

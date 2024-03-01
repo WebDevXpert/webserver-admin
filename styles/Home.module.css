@@ -166,7 +166,6 @@
   animation: cloud_two 18.5s ease-in .9s infinite;
 }
 
-/* css keyframes */
 @keyframes cloud_one {
   0% {
     transform: translateX(290%);

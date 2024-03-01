@@ -3,10 +3,9 @@ import { useSession } from "next-auth/react";
 export default function Layout({ children }) {
     const { data: session } = useSession();
 
-    // When dark mode is enabled
     const darkModeEnabled = session?.user?.darkMode;
 
-    // dark mode status
+
     const layoutClasses = darkModeEnabled
         ? "flex h-full bg-gray"
         : "flex h-full light-gray";

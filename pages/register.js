@@ -50,19 +50,6 @@ export default function Register() {
                 body: JSON.stringify(values),
                 mode: "cors"
             };
-
-            // await fetch(`${apiUrl}/api/auth/signup`, options)
-            //     .then((res) => res.json())
-            //     .then((data) => {
-            //         if (data) {
-            //             router.push(`${apiUrl}`);
-            //             console.log("data", data)
-            //             toast.success("User registered successfully")
-            //         }
-            //         else {
-            //             toast.error(data.message)
-            //         }
-            //     })
             try {
                 const response = await fetch(`${apiUrl}/api/auth/signup`, options);
                 const data = await response.json();
@@ -78,7 +65,6 @@ export default function Register() {
                     }
                 }
             } catch (error) {
-                console.error(error);
                 toast.error("An unexpected error occurred");
             }
         },

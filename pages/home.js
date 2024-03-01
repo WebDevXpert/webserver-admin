@@ -6,17 +6,15 @@ import Loader from '@/components/Loader';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
-    console.log("home page loader", loading)
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 await new Promise(resolve => setTimeout(resolve, 3000));
 
-                // Once data is fetched, set loading to false
+
                 setLoading(true);
             } catch (error) {
-                console.error('Error fetching data:', error);
                 setLoading(false);
             }
         };

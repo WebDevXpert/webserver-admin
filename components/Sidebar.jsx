@@ -30,10 +30,10 @@ const Sidebar = ({ children }) => {
     try {
       await signOut({ redirect: false });
       router.push('/login');
-      // router.push(apiUrl);
       toast.success("User logged out");
-    } catch (error) {
-      console.error("Error during logout:", error);
+    }
+    catch (error) {
+      toast.error("Error during logout:", error);
     }
   };
 
@@ -48,18 +48,6 @@ const Sidebar = ({ children }) => {
       return null;
     }
   };
-
-  // useEffect(() => {
-  //   const handleRouteChange = () => {
-  //     closeDropdown();
-  //   };
-
-  //   router.events.on('routeChangeStart', handleRouteChange);
-
-  //   return () => {
-  //     router.events.off('routeChangeStart', handleRouteChange);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {

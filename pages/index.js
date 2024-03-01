@@ -17,7 +17,6 @@ export default function Home() {
 
         if (!session) {
             router.push("/login");
-            console.log("apiUrl index page", apiUrl)
         }
     }, [session, status, router]);
 
@@ -52,7 +51,7 @@ export async function getServerSideProps(context) {
                 return {
                     redirect: {
                         destination: '/login',
-                        // destination: '/',
+
                         permanent: false,
                     },
                 };
