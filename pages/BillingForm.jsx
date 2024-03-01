@@ -1,12 +1,12 @@
 import Loader from '@/components/Loader';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useDarkMode } from '@/context/DarkmodeContext';
 
-// const response = await fetch('/api/submitBillingForm', {
+
 const BillingForm = () => {
     const [accountNumbers, setAccountNumbers] = useState([]);
     const [billingTypes, setBillingTypes] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const engineeringUnits = {
         Electric: ["kWh", "MWh"],
@@ -97,7 +97,8 @@ const BillingForm = () => {
         };
 
         try {
-            const response = await fetch('https://wxj7a06cdl.execute-api.us-east-1.amazonaws.com/default/carbonopsPutRecord', {
+            const response = await fetch('/api/submitBillingForm', {
+                // const response = await fetch('https://wxj7a06cdl.execute-api.us-east-1.amazonaws.com/default/carbonopsPutRecord', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
