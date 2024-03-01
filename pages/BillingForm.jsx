@@ -1,7 +1,7 @@
 import Loader from '@/components/Loader';
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useDarkMode } from '@/context/DarkmodeContext';
+
 
 const BillingForm = () => {
     const [accountNumbers, setAccountNumbers] = useState([]);
@@ -24,6 +24,16 @@ const BillingForm = () => {
         Natural_Gas: ["Therms", "SCF"],
         Propane: ["Gallons", "Pounds"],
     };
+
+    const [formData, setFormData] = useState({
+        accountNumber: '',
+        billType: 'Electric',
+        serviceStartDate: '',
+        serviceEndDate: '',
+        billAmount: '',
+        usageAmount: '',
+        engineeringUnit: engineeringUnits['Electric'][0],
+    });
 
     useEffect(() => {
         const fetchAccountNumbers = async () => {
@@ -88,7 +98,7 @@ const BillingForm = () => {
 
         const updatedFormData = {
             ...formData,
-            accountNumber: formData.accountNumber || accountNumbers[0],
+            accountNumber: formData.accountNumber || accountNumbers[0]?.accountNumber,
             serviceStartDate: formData.serviceStartDate || new Date().toISOString(),
             serviceEndDate: formData.serviceEndDate || new Date().toISOString(),
             billAmount: parseFloat(formData.billAmount) || 0,
@@ -97,6 +107,7 @@ const BillingForm = () => {
 
         try {
             const response = await fetch('/api/submitBillingForm', {
+                // const response = await fetch('https://wxj7a06cdl.execute-api.us-east-1.amazonaws.com/default/carbonopsPutRecord', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -115,12 +126,12 @@ const BillingForm = () => {
 
         setFormData({
             accountNumber: '',
-            billType: 'electric',
+            billType: 'Electric',
             serviceStartDate: '',
             serviceEndDate: '',
             billAmount: '',
             usageAmount: '',
-            engineeringUnit: 'kWh',
+            engineeringUnit: engineeringUnits['Electric'][0],
         });
     };
 

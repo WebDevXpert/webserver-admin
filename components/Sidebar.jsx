@@ -49,6 +49,7 @@ const Sidebar = ({ children }) => {
     }
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -62,6 +63,8 @@ const Sidebar = ({ children }) => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+=======
+>>>>>>> 5c9367b6f0e638fecc739458144fc9fbdee6a77d
 
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
