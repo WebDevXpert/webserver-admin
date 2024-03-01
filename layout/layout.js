@@ -1,19 +1,16 @@
-import { useSession } from "next-auth/react";
+import React from 'react';
+import { useDarkMode } from '@/context/DarkmodeContext';
 
-export default function Layout({ children }) {
-    const { data: session } = useSession();
+const Layout = ({ children }) => {
+    const { darkMode } = useDarkMode();
 
-    // When dark mode is enabled
-    const darkModeEnabled = session?.user?.darkMode;
+    const layoutClasses = darkMode
+        ? "flex h-full bg-gray-900 text-white"
+        : "flex h-full bg-gray-100 text-gray-900";
 
-    // dark mode status
-    const layoutClasses = darkModeEnabled
-        ? "flex h-full bg-gray"
-        : "flex h-full light-gray";
-
-    const containerClasses = darkModeEnabled
-        ? "m-auto bg-white rounded-md w-3/5 h-4/7 grid lg:grid-cols-2"
-        : "m-auto light-gray rounded-md w-3/5 h-4/7 grid lg:grid-cols-2";
+    const containerClasses = darkMode
+        ? "m-auto bg-gray-800 text-white rounded-md w-3/5 h-4/7 grid lg:grid-cols-2"
+        : "m-auto bg-gray-200 text-gray-900 rounded-md w-3/5 h-4/7 grid lg:grid-cols-2";
 
     return (
         <div className={layoutClasses}>
@@ -26,4 +23,6 @@ export default function Layout({ children }) {
             </div>
         </div>
     );
-}
+};
+
+export default Layout;

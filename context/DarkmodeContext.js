@@ -6,7 +6,7 @@ export const DarkModeProvider = ({ children }) => {
     const [darkMode, setDarkMode] = useState(false);
 
     const toggleDarkMode = () => {
-        setDarkMode(!darkMode);
+        setDarkMode(prevDarkMode => !prevDarkMode);
     };
 
     return (

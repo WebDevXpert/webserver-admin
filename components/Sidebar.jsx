@@ -50,14 +50,6 @@ const Sidebar = ({ children }) => {
   };
 
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        closeDropdown();
-      }
-    };
-  }, []);
-
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
       <div className='flex-grow flex flex-col sm:flex-row'>
