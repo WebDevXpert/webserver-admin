@@ -57,11 +57,6 @@ export default function Login() {
             }
         },
     });
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 5c9367b6f0e638fecc739458144fc9fbdee6a77d
     return (
         <Layout>
 

@@ -7,17 +7,7 @@ const BillingForm = () => {
     const [accountNumbers, setAccountNumbers] = useState([]);
     const [billingTypes, setBillingTypes] = useState([]);
     const [loading, setLoading] = useState(true);
-    const { darkMode } = useDarkMode();
-
-    const [formData, setFormData] = useState({
-        accountNumber: '',
-        billType: 'electric',
-        serviceStartDate: '',
-        serviceEndDate: '',
-        billAmount: '',
-        usageAmount: '',
-        engineeringUnit: 'kWh',
-    });
+    // const { darkMode } = useDarkMode();
 
     const engineeringUnits = {
         Electric: ["kWh", "MWh"],
