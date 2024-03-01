@@ -1,19 +1,18 @@
 import { useSession, getSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const GeneralLayout = ({ children }) => {
     const { data: session, status } = useSession();
     const router = useRouter();
 
-    const checkAuth = async () => {
-        const userSession = await getSession();
-        // if (!userSession && !['/login', '/register'].includes(router.pathname)) {
-        if (!userSession) {
-            router.push('/login');
-        }
-    };
     useEffect(() => {
+        const checkAuth = async () => {
+            const userSession = await getSession();
+            if (!userSession && !['/login', '/register'].includes(router.pathname)) {
+                router.replace('/login');
+            }
+        };
 
         checkAuth();
     }, [session, router]);
