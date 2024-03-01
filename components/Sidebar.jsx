@@ -49,29 +49,12 @@ const Sidebar = ({ children }) => {
     }
   };
 
-  // useEffect(() => {
-  //   const handleRouteChange = () => {
-  //     closeDropdown();
-  //   };
-
-  //   router.events.on('routeChangeStart', handleRouteChange);
-
-  //   return () => {
-  //     router.events.off('routeChangeStart', handleRouteChange);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         closeDropdown();
       }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
