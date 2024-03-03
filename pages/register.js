@@ -23,10 +23,10 @@ export default function Register() {
             if (userSession) {
                 setTimeout(() => {
                     setShowMessage(true);
-                }, 1000);
+                }, 3000);
                 setTimeout(() => {
                     router.push('/');
-                }, 1000);
+                }, 3000);
             }
         };
 
@@ -95,7 +95,7 @@ export default function Register() {
                                 <input
                                     type='text'
                                     name='name'
-                                    placeholder='Name'
+                                    placeholder='Enter your name'
                                     className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
 
                                     {...formik.getFieldProps('name')}
@@ -112,8 +112,8 @@ export default function Register() {
                             <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600' : ''}`}>
                                 <input
                                     type='email'
-                                    name='emailjj'
-                                    placeholder='Email'
+                                    name='email'
+                                    placeholder='Enter your email'
                                     className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
 
                                     {...formik.getFieldProps('email')}
@@ -131,7 +131,7 @@ export default function Register() {
                                 <input
                                     type={`${show.password ? 'text' : 'password'}`}
                                     name='password'
-                                    placeholder='Password'
+                                    placeholder='Enter your password'
                                     className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
 
                                     {...formik.getFieldProps('password')}
@@ -149,7 +149,7 @@ export default function Register() {
                                 <input
                                     type={`${show.cpassword ? 'text' : 'password'}`}
                                     name='cpassword'
-                                    placeholder='Confirm Password'
+                                    placeholder='Enter your confirm password'
                                     className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
 
                                     {...formik.getFieldProps('cpassword')}

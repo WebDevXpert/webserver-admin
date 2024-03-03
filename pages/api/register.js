@@ -2,18 +2,18 @@ import Head from 'next/head'
 import Layout from '../../layout/layout'
 import Link from 'next/link'
 import styles from '../../styles/Form.module.css';
-import Image from 'next/image'
 import { HiAtSymbol, HiFingerPrint, HiOutlineUser } from "react-icons/hi";
 import { useState } from 'react';
 import { useFormik } from 'formik';
 import { registerValidate } from '../../lib/validate'
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 export default function Register() {
     const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
     const [show, setShow] = useState({ password: false, cpassword: false })
-    const router = useRouter()
+    const router = useRouter();
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -41,8 +41,6 @@ export default function Register() {
 
     return (
         <Layout>
-
-
             <Head>
                 <title>Register</title>
             </Head>
@@ -58,7 +56,7 @@ export default function Register() {
                         <input
                             type="text"
                             name='name'
-                            placeholder='name'
+                            placeholder='Enter your name'
                             className={styles.input_text}
                             {...formik.getFieldProps('name')}
                         />
@@ -70,7 +68,7 @@ export default function Register() {
                         <input
                             type="email"
                             name='email'
-                            placeholder='Email'
+                            placeholder='Enter your email'
                             className={styles.input_text}
                             {...formik.getFieldProps('email')}
                         />
@@ -83,7 +81,7 @@ export default function Register() {
                         <input
                             type={`${show.password ? "text" : "password"}`}
                             name='password'
-                            placeholder='password'
+                            placeholder='Enter your password'
                             className={styles.input_text}
                             {...formik.getFieldProps('password')}
                         />
@@ -96,7 +94,7 @@ export default function Register() {
                         <input
                             type={`${show.cpassword ? "text" : "password"}`}
                             name='cpassword'
-                            placeholder='Confirm Password'
+                            placeholder='Enter your confirm password'
                             className={styles.input_text}
                             {...formik.getFieldProps('cpassword')}
                         />

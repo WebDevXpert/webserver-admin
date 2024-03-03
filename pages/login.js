@@ -4,132 +4,99 @@ import Layout from '../layout/layout';
 import styles from '../styles/Form.module.css';
 import { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
-import { useRouter } from 'next/navigation';
-import login_validate from '../lib/validate';
-import { getSession, signIn, useSession } from "next-auth/react"
+import { useRouter } from 'next/router';
+import { signIn, useSession } from "next-auth/react";
 import { HiAtSymbol, HiFingerPrint } from 'react-icons/hi';
 import { toast } from 'react-toastify';
 
 export default function Login() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
     const { data: session } = useSession();
     const router = useRouter();
-    const [showMessage, setShowMessage] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     useEffect(() => {
-        const checkSession = async () => {
-            const userSession = await getSession();
-            if (userSession) {
-                setTimeout(() => {
-                    setShowMessage(true);
-                }, 1000);
-                setTimeout(() => {
-                    router.push('/');
-                    setShowMessage(false)
-                }, 1000);
-            }
-        };
-
-        checkSession();
-    }, [router]);
-
-    const [show, setShow] = useState(false);
+        if (session) {
+            router.push('/');
+        }
+    }, [session, router]);
 
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
-        validate: login_validate,
         onSubmit: async (values) => {
-            const status = await signIn('credentials', {
+            const result = await signIn('credentials', {
                 redirect: false,
                 email: values.email,
                 password: values.password,
-                callbackUrl: '/',
             });
 
-            if (status.ok) {
-                router.push("/");
-                toast.success("User logged in")
+            if (result.error) {
+                toast.error(result.error);
             } else {
-                toast.error(status.error)
+                toast.success("Login successful");
+                router.push("/");
             }
         },
     });
+
     return (
         <Layout>
-
             <Head>
                 <title>Login</title>
             </Head>
 
-            {session ? (
-                <div>
-                    {showMessage && <p>You are already logged in.</p>}
-                </div>
-            ) : (
-                <>
-                    <div className='title my-3'>
-                        <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4'>Login</h1>
-                        <p className='mx-auto text-gray-400'>
-                            Welcome to Carbonops! <br /> Please log in here!
-                        </p>
+            <div className='title my-3'>
+                <h1 className='dark:bg-dark dark:text-white text-gray-800 text-4xl font-bold py-4'>Login</h1>
+                <p className='mx-auto text-gray-400'>
+                    Welcome to Carbonops! <br /> Please log in here!
+                </p>
+            </div>
+            <section className='w-3/3 mx-auto flex flex-col gap-10'>
+                <form className='dark:bg-dark dark:text-white flex flex-col gap-5' onSubmit={formik.handleSubmit}>
+                    <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600 ' : ''}`}>
+                        <input
+                            type='email'
+                            name='email'
+                            placeholder='Email'
+                            className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+                            {...formik.getFieldProps('email')}
+                        />
+                        <span className='icon flex items-center px-4'>
+                            <HiAtSymbol size={25} />
+                        </span>
                     </div>
-                    <section className='w-3/3 mx-auto flex flex-col gap-10'>
-                        <form className='dark:bg-dark dark:text-white flex flex-col gap-5' onSubmit={formik.handleSubmit}>
-                            <div className={`${styles.input_group} ${formik.errors.email && formik.touched.email ? 'border-rose-600 ' : ''}`}>
-                                <input
-                                    type='email'
-                                    name='email'
-                                    placeholder='Email'
-                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
-                                    {...formik.getFieldProps('email')}
-                                />
-                                <span className='icon flex items-center px-4'>
-                                    <HiAtSymbol size={25} />
-                                </span>
-                            </div>
-                            {formik.errors.email && formik.touched.email ? (
-                                <span className='text-rose-500 text-left'>{formik.errors.email}</span>
-                            ) : (
-                                <></>
-                            )}
+                    {formik.errors.email && formik.touched.email && <span className='text-rose-500 text-left'>{formik.errors.email}</span>}
 
-                            <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
-                                <input
-                                    type={`${show ? 'text' : 'password'}`}
-                                    name='password'
-                                    placeholder='password'
-                                    className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+                    <div className={`${styles.input_group} ${formik.errors.password && formik.touched.password ? 'border-rose-600' : ''}`}>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            name='password'
+                            placeholder='Password'
+                            className='w-full p-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white'
+                            {...formik.getFieldProps('password')}
+                        />
+                        <span className='icon flex items-center px-4' onClick={() => setShowPassword(!showPassword)}>
+                            <HiFingerPrint size={25} />
+                        </span>
+                    </div>
+                    {formik.errors.password && formik.touched.password && <span className='text-rose-500 text-left'>{formik.errors.password}</span>}
 
-                                    {...formik.getFieldProps('password')}
-                                />
-                                <span className='icon flex items-center px-4' onClick={() => setShow(!show)}>
-                                    <HiFingerPrint size={25} />
-                                </span>
-                            </div>
-                            {formik.errors.password && formik.touched.password ? (
-                                <span className='text-rose-500 text-left'>{formik.errors.password}</span>
-                            ) : (
-                                <></>
-                            )}
+                    <div className='input-button'>
+                        <button type='submit' className={styles.button}>
+                            Login
+                        </button>
+                    </div>
+                </form>
 
-                            <div className='input-button'>
-                                <button type='submit' className={styles.button}>
-                                    Login
-                                </button>
-                            </div>
-                        </form>
-
-                        <p className='text-left text-gray-400 '>
-                            Don't have an account yet? <Link href='/register' className='text-blue-700'>
-                                Sign Up
-                            </Link>
-                        </p>
-                    </section>
-                </>
-            )}
+                <p className='text-left text-gray-400 '>
+                    Don't have an account yet?{' '}
+                    <Link href='/register' className='text-blue-700'>
+                        Sign Up
+                    </Link>
+                </p>
+            </section>
         </Layout>
     );
 }
