@@ -1,9 +1,3 @@
-/* .imgStyle{
-    @apply bg-gradient-to-r from-blue-500 to-indigo-500 rounded-l-md;
-    position: relative;
-    overflow: hidden;
-} */
-
 .imgStyle {
     background: linear-gradient(to right, #1094ec, #1a9ff8);
     border-top-left-radius: 0.25rem;
@@ -51,7 +45,6 @@
     animation: cloud_two 18.5s ease-in .9s infinite;
 }
 
-/* css keyframes */
 @keyframes cloud_one {
     0% {
         transform: translateX(290%);

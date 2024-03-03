@@ -16,7 +16,7 @@ const TopCards = () => {
                 setBuNumbersCount(data.buNumbersCount);
                 setBuNumbers(data.buNumbers);
             } catch (error) {
-                console.error('Error fetching BU numbers:', error);
+                toast.error('Error fetching BU numbers:', error);
             }
         };
 
@@ -29,7 +29,6 @@ const TopCards = () => {
 
     return (
         <div className='gap-5 p-5 dark:bg-dark dark:text-white flex'>
-            {/* Card 1 */}
             <div className='lg:col-span-3 w-1/2 bg-white flex justify-between border p-4 rounded-lg dark:bg-light-gray dark:text-white'>
                 <div className='flex flex-col pb-4 dark:bg-light-gray dark:text-white'>
                     <p className='font-bold dark:bg-light-gray dark:text-white'><span className='text-2xl'>38,486</span> <span className='text-md'>lbs</span></p>
@@ -40,7 +39,7 @@ const TopCards = () => {
                 </p>
             </div>
 
-            {/* Card 2 */}
+
             <div className='lg:col-span-3 w-1/2 bg-white flex justify-between border p-4 rounded-lg dark:bg-light-gray dark:text-white'>
                 <div className='flex flex-col pb-4 dark:bg-light-gray dark:text-white'>
                     <p className='font-bold dark:bg-light-gray dark:text-white'><span className='text-2xl'>3,57,213.376</span> <span className='text-md'>lbs</span></p>
@@ -51,7 +50,7 @@ const TopCards = () => {
                 </p>
             </div>
 
-            {/* Card 3 (Dropdown) */}
+
             <div className='relative lg:col-span-3 w-1/2 bg-white flex justify-between border p-4 rounded-lg dark:bg-light-gray dark:text-white'>
                 <p className='font-bold dark:bg-light-gray dark:text-white'>
                     Total BU Numbers: <span className='text-2xl'>{buNumbersCount}</span>

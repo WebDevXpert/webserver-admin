@@ -7,7 +7,6 @@ const Bu = () => {
     const [sortOrder, setSortOrder] = useState('newest');
     const [loading, setLoading] = useState(true);
     const { darkMode } = useDarkMode()
-    console.log("darkMode bu", darkMode)
 
     useEffect(() => {
         const fetchOnboardForms = async () => {
@@ -22,14 +21,14 @@ const Bu = () => {
                     forms.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
                 } else if (sortOrder === 'buAsc') {
                     forms.sort((a, b) => {
-                        // Extract BU numbers for comparison
+
                         const buA = parseInt(a.buNumber.match(/\d+/)[0]);
                         const buB = parseInt(b.buNumber.match(/\d+/)[0]);
                         return buA - buB;
                     });
                 } else if (sortOrder === 'buDesc') {
                     forms.sort((a, b) => {
-                        // Extract BU numbers for comparison
+
                         const buA = parseInt(a.buNumber.match(/\d+/)[0]);
                         const buB = parseInt(b.buNumber.match(/\d+/)[0]);
                         return buB - buA;
@@ -39,7 +38,6 @@ const Bu = () => {
                 setOnboardForms(forms);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching onboard forms:', error);
                 setLoading(false);
             }
         };
@@ -91,7 +89,6 @@ const Bu = () => {
                         </thead>
                         <tbody>
                             {onboardForms.map((form) => (
-                                // <tr key={form._id} className="bg-white text-light-gray border-b dark:bg-gray-800 dark:border-gray-700">
                                 <tr key={form._id} className={`${darkMode ? "bg-light-gray text-white" : "bg-sky-50 text-black"}`}>
                                     <td className="px-7 py-4 font-medium text-gray-900 whitespace-nowrap">
                                         {form.buNumber}

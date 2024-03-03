@@ -6,7 +6,8 @@ import { toast } from 'react-toastify';
 const BillingForm = () => {
     const [accountNumbers, setAccountNumbers] = useState([]);
     const [billingTypes, setBillingTypes] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    // const { darkMode } = useDarkMode();
 
     const engineeringUnits = {
         Electric: ["kWh", "MWh"],
@@ -32,10 +33,9 @@ const BillingForm = () => {
                     throw new Error('Failed to fetch account numbers');
                 }
                 const data = await response.json();
-                console.log("Fetched account numbers:", data);
                 setAccountNumbers(data);
             } catch (error) {
-                console.error('Error fetching account numbers:', error);
+                toast.error('Error fetching account numbers:', error);
                 toast.error('Failed to fetch account numbers');
             }
         };
@@ -47,10 +47,9 @@ const BillingForm = () => {
                     throw new Error('Failed to fetch billing types');
                 }
                 const data = await response.json();
-                console.log('Fetched billing types:', data);
                 setBillingTypes(data);
             } catch (error) {
-                console.error('Error fetching billing types:', error);
+                toast.error('Error fetching billing types:', error);
                 toast.error('Failed to fetch billing types');
             }
         };
@@ -110,10 +109,8 @@ const BillingForm = () => {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            console.log('Form submitted successfully');
             toast.success("Billing form created");
         } catch (error) {
-            console.error('Error:', error);
             toast.error(error.message || 'Failed to submit form');
         }
 

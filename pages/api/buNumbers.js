@@ -12,7 +12,6 @@ export default async function handler(request, response) {
             response.status(405).json({ message: 'Method Not Allowed' });
         }
     } catch (error) {
-        console.error('Error:', error);
         response.status(500).json({ error: 'Internal Server Error' });
     }
 }
@@ -21,10 +20,8 @@ async function fetchUpdatedBUData() {
     try {
         const buNumbers = await OnboardFormModel.find({}, 'buNumber name');
         const buNumbersCount = buNumbers.length;
-        console.log('Fetched BU Numbers:', buNumbers);
         return { buNumbersCount, buNumbers };
     } catch (error) {
-        console.error('Error fetching BU numbers:', error);
         throw error;
     }
 }

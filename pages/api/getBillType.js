@@ -1,5 +1,3 @@
-// api/getBillingTypes.js
-
 import connectMongo from '@/database/conn';
 import OnboardFormModel from '@/model/OnboardFormModel';
 
@@ -14,7 +12,6 @@ export default async function handler(request, response) {
             response.status(405).json({ message: 'Method Not Allowed' });
         }
     } catch (error) {
-        console.error('Error:', error);
         response.status(500).json({ error: 'Internal Server Error' });
     }
 }
@@ -22,10 +19,8 @@ export default async function handler(request, response) {
 async function fetchBillingTypes() {
     try {
         const distinctBillingTypes = await OnboardFormModel.distinct('billType');
-        console.log('Fetched Billing Types:', distinctBillingTypes);
         return distinctBillingTypes;
     } catch (error) {
-        console.error('Error fetching Billing Types:', error);
         throw error;
     }
 }

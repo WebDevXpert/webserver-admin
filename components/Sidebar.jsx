@@ -30,10 +30,10 @@ const Sidebar = ({ children }) => {
     try {
       await signOut({ redirect: false });
       router.push('/login');
-      // router.push(apiUrl);
       toast.success("User logged out");
-    } catch (error) {
-      console.error("Error during logout:", error);
+    }
+    catch (error) {
+      toast.error("Error during logout:", error);
     }
   };
 
@@ -49,6 +49,19 @@ const Sidebar = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        closeDropdown();
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className='flex flex-col min-h-screen bg-gray-100 dark:bg-dark dark:text-white'>
