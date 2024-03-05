@@ -84,9 +84,9 @@ const OnboardForm = () => {
                                     onChange={handleChange}
                                     className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 dark:bg-light-gray dark:text-white"
                                     required
-                                    pattern="^BU\d{4}[A-Z]?$"
-                                    placeholder='BU65D or BU65DS'
-                                    title="Please enter a valid BU number in the format BU + 4 digits + 1 optional uppercase letter"
+                                    pattern="^BU\d{4}[A-Z]*$"
+                                    placeholder='BU6575 or BU6655DS or BU6589D'
+                                    title="Please enter a valid BU number in the format BU + 4 digits + optional uppercase letter"
                                 />
                             </div>
                             <div className="mb-4 dark:bg-light-gray dark:text-white">

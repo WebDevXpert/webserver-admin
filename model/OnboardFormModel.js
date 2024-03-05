@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const onboardFormSchema = new mongoose.Schema(
     {
-        buNumber: { type: String, required: true, unique: true, match: /^BU\d{4}[A-Z]?$/ },
+        buNumber: { type: String, required: true, unique: true, match: /^BU\d{4}[A-Z]*$/ },
         billType: { type: String, required: true },
         accountNumber: {
             type: String,
