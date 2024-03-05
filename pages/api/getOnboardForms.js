@@ -15,14 +15,14 @@ export default async function handler(req, res) {
         const { buNumber, billType, accountNumber } = req.body;
 
         try {
-            const buNumberRegex = /^bu[A-Za-z0-9]{1,5}$/;
+            const buNumberRegex = /^BU\d{4}[A-Z]*$/;
             if (!buNumberRegex.test(buNumber)) {
                 throw new Error('Invalid BU Number format');
             }
 
-            const accountNumberRegex = /^\d{11}$/;
+            const accountNumberRegex = /^[A-Za-z0-9\-]{11,30}$/;
             if (!accountNumberRegex.test(accountNumber)) {
-                throw new Error('Account Number must be exactly 11 digits long');
+                throw new Error('Account Number must be min 11 digits long');
             }
 
             const newOnboardForm = new OnboardFormModel({

@@ -6,7 +6,7 @@ export default async function handler(request, response) {
         try {
             await connectMongo();
 
-            const buNumberRegex = /^BU\d{4}[A-Z]?$/;
+            const buNumberRegex = /^BU\d{4}[A-Z]*$/;
             if (!buNumberRegex.test(request.body.buNumber.toUpperCase())) {
                 return response.status(400).json({ error: 'Invalid BU Number format' });
             }

@@ -1,27 +1,43 @@
-import { getSession, useSession, signOut } from 'next-auth/react';
-import { useEffect } from 'react';
+import { getSession, useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
+import Loader from '@/components/Loader';
 import TopCards from '../components/TopCards';
 import BarChart from '../components/BarChart';
-import { useRouter } from 'next/navigation';
-import Head from 'next/head';
 
 export default function Home() {
-    const apiUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
     const { data: session, status } = useSession();
     const router = useRouter();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Simulating data fetching with a delay of 3 seconds
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                setLoading(false); // Set loading to false after data fetching
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     useEffect(() => {
         if (status === 'loading') {
-            return;
+            return; // Return if session status is still loading
         }
 
         if (!session) {
-            router.push("/login");
+            router.push("/login"); // Redirect to login page if session is not available
         }
     }, [session, status, router]);
 
-    if (status === 'loading') {
-        return <div>Loading...</div>;
+    if (status === 'loading' || loading) {
+        return <Loader />; // Display loader while session is loading or data fetching is in progress
     }
 
     return (
@@ -32,40 +48,41 @@ export default function Home() {
                 <meta name='viewport' content='width=device-width, initial-scale=1' />
                 <link rel='icon' href='/favicon.ico' />
             </Head>
+
             <main className='bg-gray-100 min-h-screen dark:bg-dark dark:text-white'>
-                <TopCards />
-                <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
-                    <BarChart />
-                </div>
+                {loading ? (
+                    <div className='flex items-center justify-center h-screen'>
+                        <Loader />
+                    </div>
+                ) : (
+                    <>
+                        <TopCards />
+                        <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
+                            <BarChart />
+                        </div>
+                    </>
+                )}
             </main>
         </>
     );
 }
 
+// Server-side function for session handling
 export async function getServerSideProps(context) {
-    const sessionPromise = getSession(context);
+    const session = await getSession(context);
 
-    return sessionPromise
-        .then((session) => {
-            if (!session) {
-                return {
-                    redirect: {
-                        destination: '/login',
-
-                        permanent: false,
-                    },
-                };
-            }
-
-            return {
-                props: {
-                    session,
-                },
-            };
-        })
-        .catch(() => ({
-            props: {
-                session: null,
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
             },
-        }));
+        };
+    }
+
+    return {
+        props: {
+            session,
+        },
+    };
 }
