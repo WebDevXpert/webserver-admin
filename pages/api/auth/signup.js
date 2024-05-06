@@ -17,6 +17,7 @@ export default async function handler(req, res) {
 
             const hashedPassword = await hash(password, 12);
             const newUser = new Users({ name, email, password: hashedPassword });
+            console.log("newUser", newUser)
             await newUser.save();
 
             return res.status(201).json({ status: true, user: newUser });
