@@ -57,6 +57,12 @@ export default function Home() {
                 ) : (
                     <>
                         <TopCards />
+                        <iframe
+
+                            className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white w-full lg:h-[70vh] h-[70vh] '
+                            src="https://us-east-1.quicksight.aws.amazon.com/sn/embed/share/accounts/074182974757/dashboards/71905e22-ac09-42ea-a4ed-bc00e4d0e355?directory_alias=wmecarbonops">
+                        </iframe>
+
                         <div className='p-4 grid md:grid-cols-3 grid-cols-1 gap-4 dark:bg-dark dark:text-white'>
                             <BarChart />
                         </div>
